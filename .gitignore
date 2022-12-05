@@ -365,4 +365,4 @@ FodyWeavers.xs
 *.dll
 *.vxproj
 *.filters
-*/lib
+/lib
