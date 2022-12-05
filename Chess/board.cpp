@@ -43,7 +43,8 @@ void board::initPieces()
 
     }
 
-    //pieces hard coded for the moment only if the size of the board is 8 //to-do find a cleaner implemantation
+    //pieces hard coded for the moment only if the size of the board is 8 
+    //to-do find a cleaner implemantation
     if (BOARD_SIZE == 8)
     {
         m_board[A][BOARD_SIZE - 1] = new piece(rook, white, A, BOARD_SIZE - 1);
