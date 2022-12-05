@@ -3,7 +3,7 @@
 #include <vector>
 #include <SFML/Graphics.hpp>
 
-#include "piece.hpp"
+class piece;
 
 using std::vector;
 
@@ -11,11 +11,8 @@ const int BOARD_SIZE = 8;
 const int WINDOW_SIZE = 900;
 const int MARGIN = 50;
 
-const double SQUARE_SIZE = (WINDOW_SIZE - MARGIN * 2.0) / BOARD_SIZE;
+constexpr double SQUARE_SIZE = (WINDOW_SIZE - MARGIN * 2.0) / BOARD_SIZE;
 const double FULLBOARD_SIZE = WINDOW_SIZE - MARGIN * 2.0;
-
-const int scalePiece = SQUARE_SIZE / 32;
-const int pieceGap = (SQUARE_SIZE - (16 * scalePiece * 1.0)) / 2;
 
 const std::string FONT_NAME = "rainyhearts.ttf";
 

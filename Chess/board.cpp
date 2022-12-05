@@ -1,4 +1,5 @@
 #include "board.hpp"
+#include "piece.hpp"
 
 board::board() :m_board{ BOARD_SIZE, (vector<piece*>(BOARD_SIZE,nullptr)) },
 m_window{sf::VideoMode(WINDOW_SIZE,WINDOW_SIZE) , "CHESS BOARD"},
@@ -34,25 +35,47 @@ void board::initPieces()
 {
     const int penultimateRow = BOARD_SIZE - 2;
 
-    const int penultimateRowLocation = MARGIN + SQUARE_SIZE * 2;
-    const int secondRowLocation = MARGIN + SQUARE_SIZE * (BOARD_SIZE - 2);
-    const int firstRowLocation = 0;
-    const int lastRowLocation = 0;
-
-    for (int x = 0; x < BOARD_SIZE; ++x)
+    for (int x = A; x < BOARD_SIZE; ++x)
     {
-        m_board[x][penultimateRow] = new piece(pawn,black);
-        m_board[x][penultimateRow]->set_spriteScale(scalePiece, scalePiece);
-        m_board[x][penultimateRow]->set_spritePosition (MARGIN + SQUARE_SIZE * x + pieceGap, penultimateRowLocation);
+        m_board[x][penultimateRow] = new piece(pawn, white, x, penultimateRow);
 
-        m_board[x][1] = new piece(pawn, white);
-        m_board[x][1]->set_spriteScale(scalePiece, scalePiece);
-        m_board[x][1]->set_spritePosition(MARGIN + SQUARE_SIZE * x + pieceGap, secondRowLocation);
+        m_board[x][1] = new piece(pawn, black, x, 1);
 
     }
-    
+
+    //pieces hard coded for the moment only if the size of the board is 8 //to-do find a cleaner implemantation
+    if (BOARD_SIZE == 8)
+    {
+        m_board[A][BOARD_SIZE - 1] = new piece(rook, white, A, BOARD_SIZE - 1);
+        m_board[A][0] = new piece(rook, black, A, 0);
+
+        m_board[H][BOARD_SIZE - 1] = new piece(rook, white, H, BOARD_SIZE - 1);
+        m_board[H][0] = new piece(rook, black, H, 0);
+
+
+        m_board[B][BOARD_SIZE - 1] = new piece(knight, white, B, BOARD_SIZE - 1);
+        m_board[B][0] = new piece(knight, black, B, 0);
+
+        m_board[G][BOARD_SIZE - 1] = new piece(knight, white, G, BOARD_SIZE - 1);
+        m_board[G][0] = new piece(knight, black, G, 0);
+
+
+        m_board[C][BOARD_SIZE - 1] = new piece(bishop, white, C, BOARD_SIZE - 1);
+        m_board[C][0] = new piece(bishop, black, C, 0);
+
+        m_board[F][BOARD_SIZE - 1] = new piece(bishop, white, F, BOARD_SIZE - 1);
+        m_board[F][0] = new piece(bishop, black, F, 0);
+
+
+        m_board[D][BOARD_SIZE - 1] = new piece(king, white, D, BOARD_SIZE - 1);
+        m_board[D][0] = new piece(king, black, D, 0);
+
+        m_board[E][BOARD_SIZE - 1] = new piece(queen, white, E, BOARD_SIZE - 1);
+        m_board[E][0] = new piece(queen, black, E, 0);
+    }
 }
 
+//to-do find a cleaner way to draw everything
 void board::draw()
 {
     m_window.clear(DARK);
@@ -85,7 +108,7 @@ void board::drawChessBoard()
 {
     for (int y = 0; y < BOARD_SIZE; ++y)
     {
-        for (int x = 0; x < BOARD_SIZE; ++x)
+        for (int x = A; x < BOARD_SIZE; ++x)
         {
             sf::RectangleShape boardSquare(sf::Vector2f(SQUARE_SIZE, SQUARE_SIZE));
             boardSquare.setPosition(MARGIN + x * SQUARE_SIZE, MARGIN + y * SQUARE_SIZE);
@@ -115,7 +138,7 @@ void board::drawCoordinates()
     const double valueBorderLeft = MARGIN - coordonate.getCharacterSize();
     char files = 'A';
 
-    for (int x = 0; x < BOARD_SIZE; ++x, ++files)
+    for (int x = A; x < BOARD_SIZE; ++x, ++files)
     {
         coordonate.setString(files);
         coordonate.setPosition(valueCalc + (x * SQUARE_SIZE), valueBorderBot);
@@ -133,7 +156,7 @@ void board::drawPieces()
 {
     for (int y = 0; y < BOARD_SIZE; ++y)
     {
-        for (int x = 0; x < BOARD_SIZE; ++x)
+        for (int x = A; x < BOARD_SIZE; ++x)
         {
             if (m_board[x][y])
             {

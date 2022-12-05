@@ -365,5 +365,5 @@ FodyWeavers.xs
 *.dll
 *.vxproj
 *.filters
-lib/
-include/
+Chess/lib/
+Chess/include/
