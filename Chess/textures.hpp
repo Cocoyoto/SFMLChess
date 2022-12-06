@@ -17,6 +17,5 @@ public:
 private:
 	textures();
 
-	sf::Texture m_blackPiecesTex;
-	sf::Texture m_whitePiecesTex;
+	sf::Texture m_piecesTex;
 };

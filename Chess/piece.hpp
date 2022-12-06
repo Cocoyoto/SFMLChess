@@ -5,7 +5,7 @@
 #include "board.hpp"
 
 enum chessPieces { pawn, knight, rook, bishop, king, queen };
-enum chessColor { white, black };
+enum chessColor { black, white };
 
 const int Y_PIECE_GAP = 0;
 
