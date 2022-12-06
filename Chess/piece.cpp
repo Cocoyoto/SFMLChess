@@ -2,10 +2,11 @@
 #include "textures.hpp"
 #include "board.hpp"
 
-piece::piece(chessPieces piece, chessColor color, int x, int y):m_piece{piece},
-m_color{color},
-m_files{x},
-m_rows{y}
+piece::piece(chessPieces piece, chessColor color, int x, int y):
+	m_piece{piece},
+	m_color{color},
+	m_files{x},
+	m_rows{y}
 {
     textures::get_textures()->set_textPiece(this);
 	m_sprite.setScale(sf::Vector2f(m_scalePiece, m_scalePiece));

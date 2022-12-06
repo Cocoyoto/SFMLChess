@@ -1,9 +1,9 @@
 #include "board.hpp"
 #include "piece.hpp"
 
-board::board() :m_board{ BOARD_SIZE, (vector<piece*>(BOARD_SIZE,nullptr)) },
-m_window{sf::VideoMode(WINDOW_SIZE,WINDOW_SIZE) , "CHESS BOARD"},
-m_colorBoard{ BOARD_SIZE , vector<bool>(BOARD_SIZE,false) }
+board::board() :
+    m_board{ BOARD_SIZE, (vector<piece*>(BOARD_SIZE,nullptr)) },
+    m_colorBoard{ BOARD_SIZE , vector<bool>(BOARD_SIZE,false) }
 {
     for (int y = 0; y < BOARD_SIZE; ++y)
     {
@@ -77,24 +77,24 @@ void board::initPieces()
 }
 
 //to-do find a cleaner way to draw everything
-void board::draw()
+void board::draw(sf::RenderWindow& window)
 {
-    m_window.clear(DARK);
+    window.clear(DARK);
 
     //drawing background
-    drawChessOutline();
-    drawChessBoard();
+    drawChessOutline(window);
+    drawChessBoard(window);
 
     //writting coordonates
-    drawCoordinates();
+    drawCoordinates(window);
 
     //drawing pieces
-    drawPieces();
+    drawPieces(window);
 
-    m_window.display();
+    window.display();
 }
 
-void board::drawChessOutline()
+void board::drawChessOutline(sf::RenderWindow& window)
 {
     //drawing the outline
     sf::RectangleShape boardOutline(sf::Vector2f(FULLBOARD_SIZE, FULLBOARD_SIZE));
@@ -102,10 +102,10 @@ void board::drawChessOutline()
     boardOutline.setOutlineThickness(5);
     boardOutline.setOutlineColor(OUTLINE);
     boardOutline.setFillColor(sf::Color::Transparent);
-    m_window.draw(boardOutline);
+    window.draw(boardOutline);
 }
 
-void board::drawChessBoard()
+void board::drawChessBoard(sf::RenderWindow& window)
 {
     for (int y = 0; y < BOARD_SIZE; ++y)
     {
@@ -121,12 +121,12 @@ void board::drawChessBoard()
             {
                 boardSquare.setFillColor(DARK);
             }
-            m_window.draw(boardSquare);
+            window.draw(boardSquare);
         }
     }
 }
 
-void board::drawCoordinates()
+void board::drawCoordinates(sf::RenderWindow& window)
 {
     sf::Text coordonate;
     coordonate.setFont(m_font);
@@ -143,17 +143,17 @@ void board::drawCoordinates()
     {
         coordonate.setString(files);
         coordonate.setPosition(valueCalc + (x * SQUARE_SIZE), valueBorderBot);
-        m_window.draw(coordonate);
+        window.draw(coordonate);
     }
     for (int y = 0; y < BOARD_SIZE; ++y)
     {
         coordonate.setString(std::to_string(BOARD_SIZE - y));
         coordonate.setPosition(valueBorderLeft, valueCalc + (y * SQUARE_SIZE));
-        m_window.draw(coordonate);
+        window.draw(coordonate);
     }
 }
 
-void board::drawPieces()
+void board::drawPieces(sf::RenderWindow& window)
 {
     for (int y = 0; y < BOARD_SIZE; ++y)
     {
@@ -161,7 +161,7 @@ void board::drawPieces()
         {
             if (m_board[x][y])
             {
-                m_window.draw(m_board[x][y]->get_sprite());
+                window.draw(m_board[x][y]->get_sprite());
             }
         }
     }
