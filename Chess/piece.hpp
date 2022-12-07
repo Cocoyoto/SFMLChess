@@ -9,11 +9,11 @@ enum chessColor { black, white };
 
 const int Y_PIECE_GAP = 0;
 
-class piece
+class Piece
 {
 public:
-	piece() = delete;
-	piece(chessPieces piece, chessColor color, int files, int rows);
+	Piece() = delete;
+	Piece(chessPieces piece, chessColor color, int files, int rows);
 
 	chessPieces get_piece() const;
 	chessColor get_color() const;

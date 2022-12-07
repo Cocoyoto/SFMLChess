@@ -1,8 +1,8 @@
 #include "board.hpp"
 #include "piece.hpp"
 
-board::board() :
-    m_board{ BOARD_SIZE, (vector<piece*>(BOARD_SIZE,nullptr)) },
+Board::Board() :
+    m_board{ BOARD_SIZE, (vector<Piece*>(BOARD_SIZE,nullptr)) },
     m_colorBoard{ BOARD_SIZE , vector<bool>(BOARD_SIZE,false) }
 {
     for (int y = 0; y < BOARD_SIZE; ++y)
@@ -16,9 +16,9 @@ board::board() :
     initPieces();
 }
 
-board::~board()
+Board::~Board()
 {
-    //destroy the vertex of the board
+    //destroy the vertex of the Board
     for (int y = 0; y < BOARD_SIZE; ++y)
     {
         for (int x = 0; x < BOARD_SIZE; ++x)
@@ -31,53 +31,53 @@ board::~board()
     }
 }
 
-void board::initPieces()
+void Board::initPieces()
 {
     const int penultimateRow = BOARD_SIZE - 2;
 
     for (int x = A; x < BOARD_SIZE; ++x)
     {
-        m_board[x][penultimateRow] = new piece(pawn, white, x, penultimateRow);
+        m_board[x][penultimateRow] = new Piece(pawn, white, x, penultimateRow);
 
-        m_board[x][1] = new piece(pawn, black, x, 1);
+        m_board[x][1] = new Piece(pawn, black, x, 1);
 
     }
 
-    //pieces hard coded for the moment only if the size of the board is 8 
+    //pieces hard coded for the moment only if the size of the Board is 8 
     //to-do find a cleaner implemantation
     if (BOARD_SIZE == 8)
     {
-        m_board[A][BOARD_SIZE - 1] = new piece(rook, white, A, BOARD_SIZE - 1);
-        m_board[A][0] = new piece(rook, black, A, 0);
+        m_board[A][BOARD_SIZE - 1] = new Piece(rook, white, A, BOARD_SIZE - 1);
+        m_board[A][0] = new Piece(rook, black, A, 0);
 
-        m_board[H][BOARD_SIZE - 1] = new piece(rook, white, H, BOARD_SIZE - 1);
-        m_board[H][0] = new piece(rook, black, H, 0);
-
-
-        m_board[B][BOARD_SIZE - 1] = new piece(knight, white, B, BOARD_SIZE - 1);
-        m_board[B][0] = new piece(knight, black, B, 0);
-
-        m_board[G][BOARD_SIZE - 1] = new piece(knight, white, G, BOARD_SIZE - 1);
-        m_board[G][0] = new piece(knight, black, G, 0);
+        m_board[H][BOARD_SIZE - 1] = new Piece(rook, white, H, BOARD_SIZE - 1);
+        m_board[H][0] = new Piece(rook, black, H, 0);
 
 
-        m_board[C][BOARD_SIZE - 1] = new piece(bishop, white, C, BOARD_SIZE - 1);
-        m_board[C][0] = new piece(bishop, black, C, 0);
+        m_board[B][BOARD_SIZE - 1] = new Piece(knight, white, B, BOARD_SIZE - 1);
+        m_board[B][0] = new Piece(knight, black, B, 0);
 
-        m_board[F][BOARD_SIZE - 1] = new piece(bishop, white, F, BOARD_SIZE - 1);
-        m_board[F][0] = new piece(bishop, black, F, 0);
+        m_board[G][BOARD_SIZE - 1] = new Piece(knight, white, G, BOARD_SIZE - 1);
+        m_board[G][0] = new Piece(knight, black, G, 0);
 
 
-        m_board[D][BOARD_SIZE - 1] = new piece(king, white, D, BOARD_SIZE - 1);
-        m_board[D][0] = new piece(king, black, D, 0);
+        m_board[C][BOARD_SIZE - 1] = new Piece(bishop, white, C, BOARD_SIZE - 1);
+        m_board[C][0] = new Piece(bishop, black, C, 0);
 
-        m_board[E][BOARD_SIZE - 1] = new piece(queen, white, E, BOARD_SIZE - 1);
-        m_board[E][0] = new piece(queen, black, E, 0);
+        m_board[F][BOARD_SIZE - 1] = new Piece(bishop, white, F, BOARD_SIZE - 1);
+        m_board[F][0] = new Piece(bishop, black, F, 0);
+
+
+        m_board[D][BOARD_SIZE - 1] = new Piece(king, white, D, BOARD_SIZE - 1);
+        m_board[D][0] = new Piece(king, black, D, 0);
+
+        m_board[E][BOARD_SIZE - 1] = new Piece(queen, white, E, BOARD_SIZE - 1);
+        m_board[E][0] = new Piece(queen, black, E, 0);
     }
 }
 
 //to-do find a cleaner way to draw everything
-void board::draw(sf::RenderWindow& window)
+void Board::draw(sf::RenderWindow& window)
 {
     window.clear(DARK);
 
@@ -94,7 +94,7 @@ void board::draw(sf::RenderWindow& window)
     window.display();
 }
 
-void board::drawChessOutline(sf::RenderWindow& window)
+void Board::drawChessOutline(sf::RenderWindow& window)
 {
     //drawing the outline
     sf::RectangleShape boardOutline(sf::Vector2f(FULLBOARD_SIZE, FULLBOARD_SIZE));
@@ -105,7 +105,7 @@ void board::drawChessOutline(sf::RenderWindow& window)
     window.draw(boardOutline);
 }
 
-void board::drawChessBoard(sf::RenderWindow& window)
+void Board::drawChessBoard(sf::RenderWindow& window)
 {
     for (int y = 0; y < BOARD_SIZE; ++y)
     {
@@ -126,7 +126,7 @@ void board::drawChessBoard(sf::RenderWindow& window)
     }
 }
 
-void board::drawCoordinates(sf::RenderWindow& window)
+void Board::drawCoordinates(sf::RenderWindow& window)
 {
     sf::Text coordonate;
     coordonate.setFont(m_font);
@@ -153,7 +153,7 @@ void board::drawCoordinates(sf::RenderWindow& window)
     }
 }
 
-void board::drawPieces(sf::RenderWindow& window)
+void Board::drawPieces(sf::RenderWindow& window)
 {
     for (int y = 0; y < BOARD_SIZE; ++y)
     {

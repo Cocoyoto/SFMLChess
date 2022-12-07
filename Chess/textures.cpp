@@ -1,18 +1,18 @@
 #include "textures.hpp"
 
-textures* textures::get_textures()
+Textures* Textures::get_textures()
 {
-	static textures textures_;
+	static Textures textures_;
 	return &textures_;
 }
 
-textures::textures()
+Textures::Textures()
 {
 	std::string path = "./assets/";
 	m_piecesTex.loadFromFile(path + "chess_pieces.png");
 }
 
-void textures::set_textPiece(piece* chessPiece) const
+void Textures::set_textPiece(Piece* chessPiece) const
 {
 	chessPiece->get_sprite().setTexture(m_piecesTex);
 

@@ -4,7 +4,7 @@
 #include <SFML/Graphics.hpp>
 //#include "game.hpp"
 
-class piece;
+class Piece;
 
 using std::vector;
 
@@ -24,12 +24,12 @@ const sf::Color OUTLINE = BRIGHT;
 
 enum files { A, B, C, D, E, F, G, H };
 
-class board
+class Board
 {
 public :
-	board();
+	Board();
 
-	~board();
+	~Board();
 
 	void draw(sf::RenderWindow& window);
 private:
@@ -42,6 +42,6 @@ private:
 	void initPieces();
 	
 	sf::Font m_font;
-	vector<vector<piece*>> m_board;//[A][8] == [0][0]
+	vector<vector<Piece*>> m_board;//[A][8] == [0][0]
 	vector<vector<bool>> m_colorBoard;//true for white , false for black
 };

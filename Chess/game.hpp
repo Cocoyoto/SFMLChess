@@ -5,14 +5,14 @@
 
 extern const int WINDOW_SIZE;
 
-class game
+class Game
 {
 public:
-	game();
+	Game();
 	
 	void play();
 
 private:
-	board m_board;
+	Board m_board;
 	sf::RenderWindow m_window;
 };

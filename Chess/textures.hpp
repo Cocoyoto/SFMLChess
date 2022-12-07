@@ -4,18 +4,18 @@
 
 #include "piece.hpp"
 
-class textures
+class Textures
 {
 public:
-	textures(textures& copy) = delete;
-	void operator= (const textures& copy) = delete;
+	Textures(Textures& copy) = delete;
+	void operator= (const Textures& copy) = delete;
 
-	static textures* get_textures();
+	static Textures* get_textures();
 
-	void set_textPiece(piece* chessPiece) const;
+	void set_textPiece(Piece* chessPiece) const;
 	
 private:
-	textures();
+	Textures();
 
 	sf::Texture m_piecesTex;
 };

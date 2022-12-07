@@ -1,11 +1,11 @@
 #include "game.hpp"
 
-game::game():m_window { sf::VideoMode(WINDOW_SIZE, WINDOW_SIZE), "CHESS BOARD" }
+Game::Game():m_window { sf::VideoMode(WINDOW_SIZE, WINDOW_SIZE), "CHESS BOARD" }
 {
 
 }
 
-void game::play()
+void Game::play()
 {
 	bool playing = true;
 	while (playing)
