@@ -166,3 +166,8 @@ void Board::drawPieces(sf::RenderWindow& window)
         }
     }
 }
+
+void Board::FENreader(std::string fen)
+{
+    
+}

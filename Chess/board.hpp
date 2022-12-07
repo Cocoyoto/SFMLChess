@@ -32,6 +32,8 @@ public :
 	~Board();
 
 	void draw(sf::RenderWindow& window);
+
+	void FENreader(std::string fen);
 private:
 	
 	void drawChessOutline(sf::RenderWindow& window);
