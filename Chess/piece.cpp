@@ -3,10 +3,10 @@
 #include "board.hpp"
 
 Piece::Piece(chessPieces piece, chessColor color, int x, int y):
-	m_piece{piece},
-	m_color{color},
-	m_files{x},
-	m_rows{y}
+	m_color { color },
+	m_rows { y },
+	m_files { x },
+	m_piece { piece }	
 {
     Textures::get_textures()->set_textPiece(this);
 	m_sprite.setScale(sf::Vector2f(m_scalePiece, m_scalePiece));

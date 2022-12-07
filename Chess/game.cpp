@@ -1,6 +1,8 @@
 #include "game.hpp"
 
-Game::Game():m_window { sf::VideoMode(WINDOW_SIZE, WINDOW_SIZE), "CHESS BOARD" }
+Game::Game():
+	m_board { },
+	m_window { sf::VideoMode(WINDOW_SIZE, WINDOW_SIZE), "CHESS BOARD" }
 {
 
 }
