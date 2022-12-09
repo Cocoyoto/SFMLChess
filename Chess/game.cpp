@@ -1,4 +1,5 @@
 #include "game.hpp"
+#include <iostream>
 
 Game::Game():
 	m_board { },
@@ -7,12 +8,37 @@ Game::Game():
 
 }
 
+//to do : possibility to drag and drop pieces
 void Game::play()
 {
+	sf::Event event;
 	bool playing = true;
-	while (playing)
+	bool waitInput = false;
+	bool whiteToPlay = true;
+	while (playing && m_window.isOpen())
 	{
-		m_board.draw(m_window);
-		sf::sleep(sf::seconds(10));
+		while (m_window.pollEvent(event))
+		{
+			if (event.type == sf::Event::Closed)
+			{
+				m_window.close();
+			}
+			else if (event.type == sf::Event::Resized)
+			{
+				waitInput = false;
+			}
+			else if (event.type == sf::Event::MouseButtonReleased)
+			{
+				std::cerr << event.mouseButton.x << " " << event.mouseButton.y << std::endl;
+				waitInput = false;
+			}
+		}
+		
+		if (!waitInput)
+		{
+			std::cerr << "drawing" << std::endl;
+			m_board.draw(m_window);
+			waitInput = true;
+		}
 	}
 }

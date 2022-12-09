@@ -1,13 +1,19 @@
 #pragma once
 
 #include <SFML/Graphics.hpp>
+#include <vector>
 
-#include "board.hpp"
+using std::vector;
 
 enum chessPieces { pawn, knight, rook, bishop, king, queen };
 enum chessColor { black, white };
 
 const int Y_PIECE_GAP = 0;
+
+extern const double SQUARE_SIZE;
+
+const int SCALE_PIECE = SQUARE_SIZE / 32;
+const int PIECE_GAP = (SQUARE_SIZE - (16 * SCALE_PIECE * 1.0)) / 2;
 
 class Piece
 {
@@ -21,10 +27,10 @@ public:
 
 	void set_piece(chessPieces chesspiece);
 
-	void moove_piece(int x, int y);
+	void moove_piece(int x, int y, vector<vector<Piece*>> board);
 
-	static int get_scalePiece();
-	static int get_pieceGap();
+	const vector <vector<int>>& get_possibleMooves() const;
+	void set_possibleMooves(vector<vector<Piece*>> board);
 
 private:
 	void set_spritePosition(sf::Vector2f position);
@@ -38,6 +44,5 @@ private:
 	chessPieces m_piece;	
 	sf::Sprite m_sprite;
 
-	static const int m_scalePiece = SQUARE_SIZE / 32;
-	static const int m_pieceGap = (SQUARE_SIZE - (16 * m_scalePiece * 1.0)) / 2;
+	vector <vector<int>> m_possibleMooves;
 };

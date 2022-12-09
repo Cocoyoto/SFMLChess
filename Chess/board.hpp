@@ -2,7 +2,6 @@
 
 #include <vector>
 #include <SFML/Graphics.hpp>
-//#include "game.hpp"
 
 class Piece;
 
@@ -13,7 +12,7 @@ const int MARGIN = 50;
 
 const int WINDOW_SIZE = 900;
 
-constexpr double SQUARE_SIZE = (WINDOW_SIZE - MARGIN * 2.0) / BOARD_SIZE;
+const double SQUARE_SIZE = (WINDOW_SIZE - MARGIN * 2.0) / BOARD_SIZE;
 const double FULLBOARD_SIZE = WINDOW_SIZE - MARGIN * 2.0;
 
 const std::string FONT_NAME = "rainyhearts.ttf";

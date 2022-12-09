@@ -134,7 +134,8 @@ void Board::drawCoordinates(sf::RenderWindow& window)
     coordonate.setFillColor(BRIGHT);
     coordonate.setStyle(sf::Text::Bold);
 
-    const double valueCalc = MARGIN + (SQUARE_SIZE / 2) - (coordonate.getCharacterSize() / 2);
+    const double valueFiles = MARGIN + (SQUARE_SIZE / 2.0) -(coordonate.getCharacterSize() / 3);
+    const double valueRows = MARGIN + (SQUARE_SIZE / 2.0) - (coordonate.getCharacterSize() / 2);
     const double valueBorderBot = WINDOW_SIZE - MARGIN;
     const double valueBorderLeft = MARGIN - coordonate.getCharacterSize();
     char files = 'A';
@@ -142,13 +143,13 @@ void Board::drawCoordinates(sf::RenderWindow& window)
     for (int x = A; x < BOARD_SIZE; ++x, ++files)
     {
         coordonate.setString(files);
-        coordonate.setPosition(valueCalc + (x * SQUARE_SIZE), valueBorderBot);
+        coordonate.setPosition(valueFiles + (x * SQUARE_SIZE), valueBorderBot);
         window.draw(coordonate);
     }
     for (int y = 0; y < BOARD_SIZE; ++y)
     {
         coordonate.setString(std::to_string(BOARD_SIZE - y));
-        coordonate.setPosition(valueBorderLeft, valueCalc + (y * SQUARE_SIZE));
+        coordonate.setPosition(valueBorderLeft, valueRows + (y * SQUARE_SIZE));
         window.draw(coordonate);
     }
 }
