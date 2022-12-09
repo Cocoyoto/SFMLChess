@@ -13,7 +13,7 @@ const int Y_PIECE_GAP = 0;
 extern const double SQUARE_SIZE;
 
 const int SCALE_PIECE = SQUARE_SIZE / 32;
-const int PIECE_GAP = (SQUARE_SIZE - (16 * SCALE_PIECE * 1.0)) / 2;
+const int X_PIECE_GAP = (SQUARE_SIZE - (16 * SCALE_PIECE * 1.0)) / 2;
 
 class Piece
 {
@@ -43,6 +43,7 @@ private:
 	int m_files;
 	chessPieces m_piece;	
 	sf::Sprite m_sprite;
+	bool m_firstMoove;
 
 	vector <vector<int>> m_possibleMooves;
 };

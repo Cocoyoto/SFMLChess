@@ -20,6 +20,7 @@ const std::string FONT_NAME = "rainyhearts.ttf";
 const sf::Color DARK (69, 76, 94, 255);
 const sf::Color BRIGHT (230, 234, 215, 255);
 const sf::Color OUTLINE = BRIGHT;
+const sf::Color MOOVE_PREVIEW (55, 55, 55, 100);//change the color for a semi transparent one
 
 enum files { A, B, C, D, E, F, G, H };
 
@@ -33,16 +34,20 @@ public :
 	void draw(sf::RenderWindow& window);
 
 	void FENreader(std::string fen);
+
+	void clic(int x, int y, bool whiteToPlay);
 private:
 	
 	void drawChessOutline(sf::RenderWindow& window);
 	void drawChessBoard(sf::RenderWindow& window);
 	void drawCoordinates(sf::RenderWindow& window);
 	void drawPieces(sf::RenderWindow& window);
+	void drawPossiblesMooves(sf::RenderWindow& window);
 
 	void initPieces();
 	
 	sf::Font m_font;
 	vector<vector<Piece*>> m_board;//[A][8] == [0][0]
 	vector<vector<bool>> m_colorBoard;//true for white , false for black
+	Piece* m_focusedPiece;
 };

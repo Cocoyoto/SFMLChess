@@ -1,5 +1,4 @@
 #include "game.hpp"
-#include <iostream>
 
 Game::Game():
 	m_board { },
@@ -15,6 +14,8 @@ void Game::play()
 	bool playing = true;
 	bool waitInput = false;
 	bool whiteToPlay = true;
+	Piece* pieceFocus = nullptr;
+
 	while (playing && m_window.isOpen())
 	{
 		while (m_window.pollEvent(event))
@@ -29,14 +30,13 @@ void Game::play()
 			}
 			else if (event.type == sf::Event::MouseButtonReleased)
 			{
-				std::cerr << event.mouseButton.x << " " << event.mouseButton.y << std::endl;
+				m_board.clic(event.mouseButton.x, event.mouseButton.y, whiteToPlay);
 				waitInput = false;
 			}
 		}
 		
 		if (!waitInput)
 		{
-			std::cerr << "drawing" << std::endl;
 			m_board.draw(m_window);
 			waitInput = true;
 		}

@@ -1,9 +1,11 @@
 #include "board.hpp"
 #include "piece.hpp"
+#include <iostream>
 
 Board::Board() :
     m_board{ BOARD_SIZE, (vector<Piece*>(BOARD_SIZE,nullptr)) },
-    m_colorBoard{ BOARD_SIZE , vector<bool>(BOARD_SIZE,false) }
+    m_colorBoard{ BOARD_SIZE , vector<bool>(BOARD_SIZE,false) },
+    m_focusedPiece { nullptr }
 {
     for (int y = 0; y < BOARD_SIZE; ++y)
     {
@@ -91,6 +93,9 @@ void Board::draw(sf::RenderWindow& window)
     //drawing pieces
     drawPieces(window);
 
+    //drawing the possibles mooves of a focused piece
+    drawPossiblesMooves(window);
+
     window.display();
 }
 
@@ -168,7 +173,48 @@ void Board::drawPieces(sf::RenderWindow& window)
     }
 }
 
+//drawing possibles mooves of a focused piece
+void Board::drawPossiblesMooves(sf::RenderWindow& window)
+{
+    if (m_focusedPiece)
+    {
+        vector <vector<int>> possiblesMooves = m_focusedPiece->get_possibleMooves();
+
+        int radius = SQUARE_SIZE / 4;
+        const double value = MARGIN + (SQUARE_SIZE / 2.0);
+        for (int i = 0; i < possiblesMooves[0].size(); ++i)
+        {
+            sf::CircleShape circle;
+            circle.setRadius(radius);
+            circle.setPointCount(50);
+            circle.setOrigin(radius, radius);
+            circle.setPosition((possiblesMooves[0][i] * SQUARE_SIZE) + value, (BOARD_SIZE - possiblesMooves[1][i]) * SQUARE_SIZE);
+            circle.setFillColor(MOOVE_PREVIEW);
+            window.draw(circle);
+        }
+    }
+}
+
 void Board::FENreader(std::string fen)
 {
     
+}
+
+void Board::clic(int x, int y, bool whiteToPlay)
+{
+    if (!m_focusedPiece)
+    {
+        const double maxSize = WINDOW_SIZE - MARGIN;
+        if (x >= MARGIN && x <= maxSize && y >= MARGIN && y <= maxSize)
+        {
+            int clicX = (x - MARGIN) / SQUARE_SIZE;
+            int clicY = (y - MARGIN) / SQUARE_SIZE;
+            m_focusedPiece = m_board[clicX][clicY];
+        }
+    }
+    else
+    {
+        //either the piece can moove there and so it moove , no matter that no more focused piece
+        m_focusedPiece = nullptr;
+    }
 }

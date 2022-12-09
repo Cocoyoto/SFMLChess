@@ -7,7 +7,8 @@ Piece::Piece(chessPieces piece, chessColor color, int x, int y):
 	m_rows { y },
 	m_files { x },
 	m_piece { piece },
-	m_possibleMooves { vector<vector<int>> (2 , vector <int> (0,0))}
+	m_possibleMooves { vector<vector<int>> (2 , vector <int> (0,0))},
+	m_firstMoove { true }
 {
 
     Textures::get_textures()->set_textPiece(this);
@@ -42,6 +43,7 @@ void Piece::set_piece(chessPieces chesspiece)
 //check if the moove is possible ? (in array)
 void Piece::moove_piece(int x, int y, vector<vector<Piece*>> board)
 {
+	m_firstMoove = false;
 	m_files = x;
 	m_rows = y;
 	set_spritePosition(x, y);
@@ -60,12 +62,12 @@ void Piece::set_possibleMooves(vector<vector<Piece*>> board)
 
 void Piece::set_spritePosition(sf::Vector2f position)
 {
-	m_sprite.setPosition(sf::Vector2f(MARGIN + SQUARE_SIZE * position.x + PIECE_GAP, (MARGIN + SQUARE_SIZE * position.y) - Y_PIECE_GAP));
+	m_sprite.setPosition(sf::Vector2f(MARGIN + SQUARE_SIZE * position.x + X_PIECE_GAP, (MARGIN + SQUARE_SIZE * position.y) - Y_PIECE_GAP));
 }
 
 void Piece::set_spritePosition(int x, int y)
 {
-	m_sprite.setPosition(sf::Vector2f(MARGIN + SQUARE_SIZE * x + PIECE_GAP, (MARGIN + SQUARE_SIZE * y) - Y_PIECE_GAP));
+	m_sprite.setPosition(sf::Vector2f(MARGIN + SQUARE_SIZE * x + X_PIECE_GAP, (MARGIN + SQUARE_SIZE * y) - Y_PIECE_GAP));
 }
 
 void Piece::set_spriteScale(sf::Vector2f scale)
