@@ -33,7 +33,7 @@ sf::Sprite& Piece::get_sprite()
 
 void Piece::set_piece(chessPieces chesspiece)
 {
-	if (m_piece == pawn)
+	if (m_piece == PAWN)
 	{
 		m_piece = chesspiece;
 		Textures::get_textures()->set_textPiece(this);

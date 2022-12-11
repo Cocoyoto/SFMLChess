@@ -5,8 +5,8 @@
 
 using std::vector;
 
-enum chessPieces { pawn, knight, rook, bishop, king, queen };
-enum chessColor { black, white };
+enum chessPieces { PAWN, KNIGHT, ROOK, BISHOP, KING, QUEEN };
+enum chessColor { BLACK, WHITE };
 
 const int Y_PIECE_GAP = 0;
 

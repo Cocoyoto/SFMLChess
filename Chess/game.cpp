@@ -1,8 +1,7 @@
 #include "game.hpp"
 
 Game::Game():
-	m_board { },
-	m_window { sf::VideoMode(WINDOW_SIZE, WINDOW_SIZE), "CHESS BOARD" }
+	m_board { }
 {
 
 }
@@ -13,7 +12,7 @@ void Game::play()
 	sf::Event event;
 	bool playing = true;
 	bool waitInput = false;
-	bool whiteToPlay = true;
+	bool WHITEToPlay = true;
 	Piece* pieceFocus = nullptr;
 
 	while (playing && m_window.isOpen())
@@ -30,7 +29,7 @@ void Game::play()
 			}
 			else if (event.type == sf::Event::MouseButtonReleased)
 			{
-				m_board.clic(event.mouseButton.x, event.mouseButton.y, whiteToPlay);
+				m_board.clic(event.mouseButton.x, event.mouseButton.y, WHITEToPlay);
 				waitInput = false;
 			}
 		}

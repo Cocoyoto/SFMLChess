@@ -39,9 +39,9 @@ void Board::initPieces()
 
     for (int x = A; x < BOARD_SIZE; ++x)
     {
-        m_board[x][penultimateRow] = new Piece(pawn, white, x, penultimateRow);
+        m_board[x][penultimateRow] = new Piece(PAWN, WHITE, x, penultimateRow);
 
-        m_board[x][1] = new Piece(pawn, black, x, 1);
+        m_board[x][1] = new Piece(PAWN, BLACK, x, 1);
 
     }
 
@@ -49,32 +49,32 @@ void Board::initPieces()
     //to-do find a cleaner implemantation
     if (BOARD_SIZE == 8)
     {
-        m_board[A][BOARD_SIZE - 1] = new Piece(rook, white, A, BOARD_SIZE - 1);
-        m_board[A][0] = new Piece(rook, black, A, 0);
+        m_board[A][BOARD_SIZE - 1] = new Piece(ROOK, WHITE, A, BOARD_SIZE - 1);
+        m_board[A][0] = new Piece(ROOK, BLACK, A, 0);
 
-        m_board[H][BOARD_SIZE - 1] = new Piece(rook, white, H, BOARD_SIZE - 1);
-        m_board[H][0] = new Piece(rook, black, H, 0);
-
-
-        m_board[B][BOARD_SIZE - 1] = new Piece(knight, white, B, BOARD_SIZE - 1);
-        m_board[B][0] = new Piece(knight, black, B, 0);
-
-        m_board[G][BOARD_SIZE - 1] = new Piece(knight, white, G, BOARD_SIZE - 1);
-        m_board[G][0] = new Piece(knight, black, G, 0);
+        m_board[H][BOARD_SIZE - 1] = new Piece(ROOK, WHITE, H, BOARD_SIZE - 1);
+        m_board[H][0] = new Piece(ROOK, BLACK, H, 0);
 
 
-        m_board[C][BOARD_SIZE - 1] = new Piece(bishop, white, C, BOARD_SIZE - 1);
-        m_board[C][0] = new Piece(bishop, black, C, 0);
+        m_board[B][BOARD_SIZE - 1] = new Piece(KNIGHT, WHITE, B, BOARD_SIZE - 1);
+        m_board[B][0] = new Piece(KNIGHT, BLACK, B, 0);
 
-        m_board[F][BOARD_SIZE - 1] = new Piece(bishop, white, F, BOARD_SIZE - 1);
-        m_board[F][0] = new Piece(bishop, black, F, 0);
+        m_board[G][BOARD_SIZE - 1] = new Piece(KNIGHT, WHITE, G, BOARD_SIZE - 1);
+        m_board[G][0] = new Piece(KNIGHT, BLACK, G, 0);
 
 
-        m_board[D][BOARD_SIZE - 1] = new Piece(king, white, D, BOARD_SIZE - 1);
-        m_board[D][0] = new Piece(king, black, D, 0);
+        m_board[C][BOARD_SIZE - 1] = new Piece(BISHOP, WHITE, C, BOARD_SIZE - 1);
+        m_board[C][0] = new Piece(BISHOP, BLACK, C, 0);
 
-        m_board[E][BOARD_SIZE - 1] = new Piece(queen, white, E, BOARD_SIZE - 1);
-        m_board[E][0] = new Piece(queen, black, E, 0);
+        m_board[F][BOARD_SIZE - 1] = new Piece(BISHOP, WHITE, F, BOARD_SIZE - 1);
+        m_board[F][0] = new Piece(BISHOP, BLACK, F, 0);
+
+
+        m_board[D][BOARD_SIZE - 1] = new Piece(KING, WHITE, D, BOARD_SIZE - 1);
+        m_board[D][0] = new Piece(KING, BLACK, D, 0);
+
+        m_board[E][BOARD_SIZE - 1] = new Piece(QUEEN, WHITE, E, BOARD_SIZE - 1);
+        m_board[E][0] = new Piece(QUEEN, BLACK, E, 0);
     }
 }
 
@@ -200,7 +200,7 @@ void Board::FENreader(std::string fen)
     
 }
 
-void Board::clic(int x, int y, bool whiteToPlay)
+void Board::clic(int x, int y, bool WHITEToPlay)
 {
     if (!m_focusedPiece)
     {
