@@ -2,38 +2,34 @@
 #include "piece.hpp"
 #include <iostream>
 
-Board::Board() :
-    m_board{ BOARD_SIZE, (vector<Piece*>(BOARD_SIZE,nullptr)) },
-    m_colorBoard{ BOARD_SIZE , vector<bool>(BOARD_SIZE,false) },
-    m_focusedPiece { nullptr }
+Board::Board(const BoardConfig& config):
+    m_config { config }
+    // m_focusedPiece { nullptr }
 {
-    for (int y = 0; y < BOARD_SIZE; ++y)
-    {
-        for (int x = 0; x < BOARD_SIZE; ++x)
-        {
-            m_colorBoard[x][y] = !((x + y) % 2);
-        }
-    }
-    m_font.loadFromFile(FONT_NAME);
-    initPieces();
+    // initPieces();
 }
 
 Board::~Board()
 {
     //destroy the vertex of the Board
-    for (int y = 0; y < BOARD_SIZE; ++y)
+    /* for (int y = 0; y < m_config.board_size; ++y)
     {
-        for (int x = 0; x < BOARD_SIZE; ++x)
+        for (int x = 0; x < m_config.board_size; ++x)
         {
             if (m_board[x][y])
             {
                 delete m_board[x][y];
             }
         }
-    }
+    } */
 }
 
-void Board::initPieces()
+unsigned int Board::getSize() const
+{
+    return m_config.board_size;
+}
+
+/* void Board::initPieces()
 {
     const int penultimateRow = BOARD_SIZE - 2;
 
@@ -76,10 +72,10 @@ void Board::initPieces()
         m_board[E][BOARD_SIZE - 1] = new Piece(QUEEN, WHITE, E, BOARD_SIZE - 1);
         m_board[E][0] = new Piece(QUEEN, BLACK, E, 0);
     }
-}
+} */
 
 //to-do find a cleaner way to draw everything
-void Board::draw(sf::RenderWindow& window)
+/* void Board::draw(sf::RenderWindow& window)
 {
     window.clear(DARK);
 
@@ -97,9 +93,9 @@ void Board::draw(sf::RenderWindow& window)
     drawPossiblesMooves(window);
 
     window.display();
-}
+} */
 
-void Board::drawChessOutline(sf::RenderWindow& window)
+/* void Board::drawChessOutline(sf::RenderWindow& window)
 {
     //drawing the outline
     sf::RectangleShape boardOutline(sf::Vector2f(FULLBOARD_SIZE, FULLBOARD_SIZE));
@@ -193,16 +189,16 @@ void Board::drawPossiblesMooves(sf::RenderWindow& window)
             window.draw(circle);
         }
     }
-}
+} */
 
 void Board::FENreader(std::string fen)
 {
     
 }
 
-void Board::clic(int x, int y, bool WHITEToPlay)
+void Board::clic(int x, int y, bool WhiteToPlay)
 {
-    if (!m_focusedPiece)
+    /* if (!m_focusedPiece)
     {
         const double maxSize = WINDOW_SIZE - MARGIN;
         if (x >= MARGIN && x <= maxSize && y >= MARGIN && y <= maxSize)
@@ -216,5 +212,5 @@ void Board::clic(int x, int y, bool WHITEToPlay)
     {
         //either the piece can moove there and so it moove , no matter that no more focused piece
         m_focusedPiece = nullptr;
-    }
+    } */
 }

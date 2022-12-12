@@ -1,6 +1,6 @@
+#include "game.typedef.hpp"
 #include "game.hpp"
 #include "textures.hpp"
-#include "game.typedef.hpp"
 
 int main()
 {

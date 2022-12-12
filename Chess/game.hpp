@@ -1,19 +1,25 @@
 #pragma once
 
 #include <SFML/Graphics.hpp>
-#include "board.hpp"
 
-//const int WINDOW_SIZE;
+#include "board.hpp"
+#include "renderer.hpp"
+#include "controller.hpp"
 
 
 class Game
 {
 public:
-	Game();
+	Game(const GameConfig& config);
 	
 	void play();
 
+	bool isRunning() const;
+
 private:
+	bool m_running;
+
 	Board m_board;
-	sf::RenderWindow m_window;
+	Renderer m_rend;
+	Controller m_contr;
 };

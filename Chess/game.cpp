@@ -1,43 +1,39 @@
 #include "game.hpp"
 
-Game::Game():
-	m_board { }
+Game::Game(const GameConfig& config):
+	m_running(false),
+	m_board(config.board),
+	m_rend(config.renderer, &m_board),
+	m_contr(&m_rend, &m_board)
 {
 
+}
+
+bool Game::isRunning() const {
+	return m_running && m_rend.hasWindow();
 }
 
 //to do : possibility to drag and drop pieces
 void Game::play()
 {
-	sf::Event event;
-	bool playing = true;
-	bool waitInput = false;
-	bool WHITEToPlay = true;
-	Piece* pieceFocus = nullptr;
+	m_running = true;
 
-	while (playing && m_window.isOpen())
+	// bool waitInput = false;
+	// bool WHITEToPlay = true;
+	// Piece* pieceFocus = nullptr;
+
+	while (isRunning())
 	{
-		while (m_window.pollEvent(event))
-		{
-			if (event.type == sf::Event::Closed)
-			{
-				m_window.close();
-			}
-			else if (event.type == sf::Event::Resized)
-			{
-				waitInput = false;
-			}
-			else if (event.type == sf::Event::MouseButtonReleased)
-			{
-				m_board.clic(event.mouseButton.x, event.mouseButton.y, WHITEToPlay);
-				waitInput = false;
-			}
+		m_contr.update();
+
+		if(m_rend.hasWindow()) {
+			m_rend.draw();
 		}
 		
-		if (!waitInput)
+		/* if (!waitInput)
 		{
 			m_board.draw(m_window);
 			waitInput = true;
-		}
+		} */
 	}
 }

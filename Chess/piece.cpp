@@ -1,22 +1,20 @@
 #include "piece.hpp"
 #include "textures.hpp"
-#include "board.hpp"
 
-Piece::Piece(chessPieces piece, chessColor color, int x, int y):
+Piece::Piece(const chessPieces piece, const chessColor color, const sf::Vector2u position):
 	m_color { color },
-	m_rows { y },
-	m_files { x },
 	m_piece { piece },
-	m_possibleMooves { vector<vector<int>> (2 , vector <int> (0,0))},
-	m_firstMoove { true }
+	m_position { position }
+	// m_possibleMooves { vector<vector<int>> (2 , vector <int> (0,0))},
+	// m_firstMoove { true }
 {
 
-    Textures::get_textures()->set_textPiece(this);
-	m_sprite.setScale(sf::Vector2f(SCALE_PIECE, SCALE_PIECE));
-	set_spritePosition(x, y);
+    // Textures::get_textures()->set_textPiece(this);
+	// m_sprite.setScale(sf::Vector2f(SCALE_PIECE, SCALE_PIECE));
+	// set_spritePosition(x, y);
 }
 
-chessPieces Piece::get_piece() const
+/* chessPieces Piece::get_piece() const
 {
 	return m_piece;
 }
@@ -78,4 +76,4 @@ void Piece::set_spriteScale(sf::Vector2f scale)
 void Piece::set_spriteScale(int x, int y)
 {
 	set_spriteScale(sf::Vector2f(x, y));
-}
+} */

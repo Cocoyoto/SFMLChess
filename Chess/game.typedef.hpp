@@ -1,18 +1,7 @@
 #pragma once
 #include <SFML/Graphics.hpp>
 
-
-
-
-const std::string FONT_NAME = "rainyhearts.ttf";
-
-const sf::Color DARK(69, 76, 94, 255);
-const sf::Color BRIGHT(230, 234, 215, 255);
-const sf::Color OUTLINE = BRIGHT;
-const sf::Color MOOVE_PREVIEW(55, 55, 55, 100);
-
 struct RendererConfig {
-	unsigned int margin;
 	unsigned int window_size;
 	std::string window_name;
 };
