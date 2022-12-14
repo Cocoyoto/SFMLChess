@@ -10,7 +10,7 @@ public:
 	Controller(Renderer* rend, Board* board);
 	~Controller();
 
-	void update();
+	bool update();
 
 private:
 	Renderer* m_rend;

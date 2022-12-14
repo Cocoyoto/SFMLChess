@@ -8,7 +8,7 @@ int main()
     // imaginons que tu loads ta config depuis un fichier, et ça te donne ça :
     GameConfig config {
         {
-            920,
+            900,
             "Super Pixeled Chess"
         },
         {

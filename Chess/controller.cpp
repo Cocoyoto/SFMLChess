@@ -9,28 +9,32 @@ Controller::Controller(Renderer* rend, Board* board):
 
 Controller::~Controller()
 {
+	
+}	
 
-}
-
-void Controller::update()
+bool Controller::update()
 {
 	sf::Event event;
 
+	bool ret = false;
 	while (m_rend->pollEvent(event))
+	{
+		ret = true;
+		if (event.type == sf::Event::Closed)
 		{
-			if (event.type == sf::Event::Closed)
-			{
-				m_rend->closeWindow();
-				break;
-			}
-			/* else if (event.type == sf::Event::Resized)
-			{
-				waitInput = false;
-			}
-			else if (event.type == sf::Event::MouseButtonReleased)
-			{
-				m_board.clic(event.mouseButton.x, event.mouseButton.y, WHITEToPlay);
-				waitInput = false;
-			} */
+			m_rend->closeWindow();
+			break;
 		}
+		/* else if (event.type == sf::Event::Resized)
+		{
+			waitInput = false;
+		}
+		else if (event.type == sf::Event::MouseButtonReleased)
+		{
+			m_board.clic(event.mouseButton.x, event.mouseButton.y, WHITEToPlay);
+			waitInput = false;
+		} */
+	}
+
+	return ret;
 }

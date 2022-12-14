@@ -25,12 +25,6 @@ public :
 
 private:
 	
-	// void drawChessOutline(sf::RenderWindow& window);
-	// void drawChessBoard(sf::RenderWindow& window);
-	// void drawCoordinates(sf::RenderWindow& window);
-	// void drawPieces(sf::RenderWindow& window);
-	// void drawPossiblesMooves(sf::RenderWindow& window);
-
 	// void initPieces();
 	
 	BoardConfig m_config;

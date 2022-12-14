@@ -18,15 +18,16 @@ void Game::play()
 {
 	m_running = true;
 
-	// bool waitInput = false;
+	bool waitInput = false;
 	// bool WHITEToPlay = true;
 	// Piece* pieceFocus = nullptr;
 
 	while (isRunning())
 	{
-		m_contr.update();
+		waitInput= m_contr.update();
 
-		if(m_rend.hasWindow()) {
+		if(m_rend.hasWindow() && !waitInput)
+		{
 			m_rend.draw();
 		}
 		
