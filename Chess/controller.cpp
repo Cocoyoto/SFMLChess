@@ -25,15 +25,10 @@ bool Controller::update()
 			m_rend->closeWindow();
 			break;
 		}
-		/* else if (event.type == sf::Event::Resized)
-		{
-			waitInput = false;
-		}
 		else if (event.type == sf::Event::MouseButtonReleased)
 		{
-			m_board.clic(event.mouseButton.x, event.mouseButton.y, WHITEToPlay);
-			waitInput = false;
-		} */
+			//m_board.clic(event.mouseButton.x, event.mouseButton.y, WHITEToPlay);
+		}
 	}
 
 	return ret;

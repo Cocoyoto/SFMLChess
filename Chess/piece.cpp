@@ -1,7 +1,7 @@
 #include "piece.hpp"
-#include "textures.hpp"
+//#include "textures.hpp"
 
-Piece::Piece(const chessPieces piece, const chessColor color, const sf::Vector2u position):
+/*Piece::Piece(const chessPieces piece, const chessColor color, const sf::Vector2u position) :
 	m_color { color },
 	m_piece { piece },
 	m_position { position }
@@ -12,7 +12,7 @@ Piece::Piece(const chessPieces piece, const chessColor color, const sf::Vector2u
     // Textures::get_textures()->set_textPiece(this);
 	// m_sprite.setScale(sf::Vector2f(SCALE_PIECE, SCALE_PIECE));
 	// set_spritePosition(x, y);
-}
+}*/
 
 /* chessPieces Piece::get_piece() const
 {

@@ -139,6 +139,8 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="piece.cpp" />
     <ClCompile Include="renderer.cpp" />
+    <ClCompile Include="resourceHolder.cpp" />
+    <ClCompile Include="ressourceHolder-impl.cpp" />
     <ClCompile Include="textures.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -148,6 +150,7 @@
     <ClInclude Include="game.typedef.hpp" />
     <ClInclude Include="piece.hpp" />
     <ClInclude Include="renderer.hpp" />
+    <ClInclude Include="resourceHolder.hpp" />
     <ClInclude Include="textures.hpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

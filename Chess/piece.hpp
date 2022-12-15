@@ -1,9 +1,6 @@
 #pragma once
 
 #include <SFML/Graphics.hpp>
-#include <vector>
-
-using std::vector;
 
 enum chessPieces { PAWN, KNIGHT, ROOK, BISHOP, KING, QUEEN };
 enum chessColor { BLACK, WHITE };
@@ -19,7 +16,14 @@ class Piece
 {
 public:
 	Piece() = delete;
-	Piece(const chessPieces piece, const chessColor color, const sf::Vector2u position);
+	Piece(const chessColor color, const sf::Vector2u position);
+
+	virtual chessPieces getChessPiece() const = 0;
+	virtual unsigned int getPoints() const = 0;
+
+	chessColor getPieceColor() const;
+	const sf::Vector2u getPosition() const;
+
 
 	/* chessPieces get_piece() const;
 	chessColor get_color() const;

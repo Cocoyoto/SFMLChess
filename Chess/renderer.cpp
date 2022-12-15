@@ -1,11 +1,11 @@
 #include "renderer.hpp"
 
-Renderer::Renderer(const RendererConfig& config, Board* board):
+Renderer::Renderer(const RendererConfig& config):
 	m_window(std::make_unique<sf::RenderWindow>(sf::VideoMode(config.window_size, config.window_size), config.window_name)),
-	m_board(board),
+	m_board(nullptr),
 	m_margin(MARGIN),
 	m_fullboardSize((float)(config.window_size - m_margin * 2.0)),
-	m_squareSize(m_fullboardSize / m_board->getSize()),
+	m_squareSize(),
 	m_boardRend(sf::Quads),
 	m_colors {
 		{ 69, 	76, 	94, 	255 },
@@ -13,30 +13,40 @@ Renderer::Renderer(const RendererConfig& config, Board* board):
 		{ 230, 	234, 	215, 	255 },
 		{ 55, 	55, 	55, 	100 },
 		{ 69,	76,		94,		255 }
-	}
+	},
+	m_resourcesHolder{}
 {
-	createBoardRend();
+	sf::Texture chessPieces;
+	chessPieces.loadFromFile("./assets/chess_pieces.png");
+	m_resourcesHolder.setResource("chessPieces", chessPieces);
 	m_font.loadFromFile(FONT_NAME);
 }
 
-void Renderer::changeConfig(const RendererConfig& config)
+void Renderer::changeConfig(const RendererConfig& config) noexcept
 {
 	m_window = std::make_unique<sf::RenderWindow>(sf::VideoMode(config.window_size, config.window_size), config.window_name);
 	m_fullboardSize = (float)(config.window_size - m_margin * 2.0);
 	m_squareSize = m_fullboardSize / m_board->getSize();
-	createBoardRend();
+	if (m_board)
+	{
+		createBoardRend();
+	}
 }
 
-void Renderer::changeBoard(Board* board)
+void Renderer::changeBoard(Board* board) noexcept
 {
-	m_squareSize = m_fullboardSize / m_board->getSize();
-	createBoardRend();
+	m_board = board;
+	if (m_board)
+	{
+		m_squareSize = m_fullboardSize / m_board->getSize();
+		createBoardRend();
+	}
 }
 
 void Renderer::draw() const
 {
 	m_window->clear(m_colors.background);
-	// all m_window.draw(); here
+
 	//drawing board
 	m_window->draw(m_boardRend);
 
@@ -55,9 +65,21 @@ bool Renderer::pollEvent(sf::Event& event)
 	return m_window->pollEvent(event);
 }
 
+void Renderer::openWindow(const RendererConfig& config)
+{
+	if (m_window)
+	{
+		m_window->close();
+	}
+	m_window = std::make_unique<sf::RenderWindow>(sf::VideoMode(config.window_size, config.window_size), config.window_name);
+}
+
 void Renderer::closeWindow()
 {
-	m_window->close();
+	if (m_window)
+	{
+		m_window->close();
+	}
 	m_window = nullptr;
 }
 
@@ -75,8 +97,8 @@ void Renderer::drawCoordinates() const
 	coordinate.setFillColor(m_colors.bright);
 	coordinate.setStyle(sf::Text::Bold);
 
-	const double valueFiles = m_margin + (m_squareSize / 2.0) - (coordinate.getCharacterSize() / 3);
-	const double valueRows = m_margin + (m_squareSize / 2.0) - (coordinate.getCharacterSize() / 2);
+	const double valueFiles = m_margin + (m_squareSize / 2.0) - (coordinate.getCharacterSize() / 3.0);
+	const double valueRows = m_margin + (m_squareSize / 2.0) - (coordinate.getCharacterSize() / 2.0);
 	const double valueBorderBot = m_window->getSize().x - m_margin;
 	const double valueBorderLeft = m_margin - coordinate.getCharacterSize();
 	unsigned int board_size = m_board->getSize();

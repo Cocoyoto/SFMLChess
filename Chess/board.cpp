@@ -137,9 +137,9 @@ void Board::FENreader(std::string fen)
     
 }
 
-void Board::clic(int x, int y, bool WhiteToPlay)
+/*void Board::clic(int x, int y, bool WhiteToPlay)
 {
-    /* if (!m_focusedPiece)
+    if (!m_focusedPiece)
     {
         const double maxSize = WINDOW_SIZE - MARGIN;
         if (x >= MARGIN && x <= maxSize && y >= MARGIN && y <= maxSize)
@@ -153,5 +153,5 @@ void Board::clic(int x, int y, bool WhiteToPlay)
     {
         //either the piece can moove there and so it moove , no matter that no more focused piece
         m_focusedPiece = nullptr;
-    } */
-}
+    }
+}*/

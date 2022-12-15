@@ -21,7 +21,8 @@ public :
 
 	void FENreader(std::string fen);
 	unsigned int getSize() const;
-	void clic(const int x, const int y, const bool WhiteToPlay);
+	
+	//void clic(const int x, const int y, const bool WhiteToPlay);
 
 private:
 	

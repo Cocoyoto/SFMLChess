@@ -4,6 +4,7 @@
 
 #include "game.typedef.hpp"
 #include "board.hpp"
+#include "resourceHolder.hpp"
 
 const std::string FONT_NAME = "rainyhearts.ttf";
 const unsigned int MARGIN = 50;
@@ -20,21 +21,20 @@ struct BoardColors {
 class Renderer
 {
 public:
-	Renderer(const RendererConfig& config, Board* board);
+	Renderer(const RendererConfig& config);
 
-	void changeConfig(const RendererConfig& config);
-	void changeBoard(Board* board);
+	void changeConfig(const RendererConfig& config) noexcept;
+	void changeBoard(Board* board) noexcept;
 
 	void draw() const;
 
 	bool pollEvent(sf::Event& event);
 
+	void openWindow(const RendererConfig& config);
 	void closeWindow();
 	bool hasWindow() const;
 
 private :
-	//void drawChessOutline() const;
-	//void drawChessBoard() const;
 	void drawCoordinates() const;
 	void drawPieces() const;
 	void drawPossiblesMooves() const;
@@ -51,5 +51,6 @@ private :
 	sf::VertexArray m_boardRend;
 	sf::Font m_font;
 	BoardColors m_colors;
+	ResourceHolder<std::string, sf::Texture> m_resourcesHolder;
 };
 
