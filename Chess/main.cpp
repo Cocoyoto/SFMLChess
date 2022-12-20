@@ -18,7 +18,7 @@ int main()
 
     Game chessGame(config);
 
-
+    chessGame.newGame();
     chessGame.play();
     
     return 0;

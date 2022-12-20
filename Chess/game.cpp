@@ -13,7 +13,6 @@ bool Game::isRunning() const {
 	return m_running && m_rend.hasWindow();
 }
 
-//to do : possibility to drag and drop pieces
 void Game::play()
 {
 	if (!m_rend.hasWindow())
@@ -35,4 +34,9 @@ void Game::play()
 			m_rend.draw();
 		}
 	}
+}
+
+void Game::newGame() noexcept
+{
+	m_board.FENreader("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1");
 }

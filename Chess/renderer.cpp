@@ -7,6 +7,7 @@ Renderer::Renderer(const RendererConfig& config):
 	m_fullboardSize((float)(config.window_size - m_margin * 2.0)),
 	m_squareSize(),
 	m_boardRend(sf::Quads),
+	m_piecesRend(sf::Quads),
 	m_colors {
 		{ 69, 	76, 	94, 	255 },
 		{ 230, 	234, 	215, 	255 },
@@ -30,6 +31,7 @@ void Renderer::changeConfig(const RendererConfig& config) noexcept
 	if (m_board)
 	{
 		createBoardRend();
+		createPiecesRend();
 	}
 }
 
@@ -40,6 +42,7 @@ void Renderer::changeBoard(Board* board) noexcept
 	{
 		m_squareSize = m_fullboardSize / m_board->getSize();
 		createBoardRend();
+		createPiecesRend();
 	}
 }
 
@@ -54,7 +57,7 @@ void Renderer::draw() const
 	drawCoordinates();
 
 	//drawing pieces
-	drawPieces();
+	m_window->draw(m_piecesRend);
 
 
 	m_window->display();
@@ -118,11 +121,6 @@ void Renderer::drawCoordinates() const
 	}
 }
 
-void Renderer::drawPieces() const
-{
-
-}
-
 void Renderer::drawPossiblesMooves() const
 {
 
@@ -148,6 +146,11 @@ void Renderer::createBoardRend()
 			}
 		}
 	}
+}
+
+void Renderer::createPiecesRend()
+{
+
 }
 
 void Renderer::appendOutline(float x, float y, float width, float height, sf::Color color, float thickness)

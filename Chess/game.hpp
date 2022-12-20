@@ -14,6 +14,8 @@ public:
 	
 	void play();
 
+	void newGame() noexcept;
+
 	bool isRunning() const;
 
 private:

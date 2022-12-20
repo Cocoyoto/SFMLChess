@@ -1,27 +1,27 @@
 #include "board.hpp"
 #include "piece.hpp"
-#include <iostream>
+
+#include "pawn.hpp"
+#include "rook.hpp"
+#include "knight.hpp"
+#include "bishop.hpp"
+#include "queen.hpp"
+#include "king.hpp"
 
 Board::Board(const BoardConfig& config):
-    m_config { config }
-    // m_focusedPiece { nullptr }
+    m_config { config },
+    m_board {}
 {
     // initPieces();
 }
 
 Board::~Board()
 {
-    //destroy the vertex of the Board
-    /* for (int y = 0; y < m_config.board_size; ++y)
+    for (auto& pair : m_board)
     {
-        for (int x = 0; x < m_config.board_size; ++x)
-        {
-            if (m_board[x][y])
-            {
-                delete m_board[x][y];
-            }
-        }
-    } */
+        delete pair.second;
+        m_board.erase(pair.first);
+    }
 }
 
 unsigned int Board::getSize() const
@@ -74,42 +74,7 @@ unsigned int Board::getSize() const
     }
 } */
 
-//to-do find a cleaner way to draw everything
-/* void Board::draw(sf::RenderWindow& window)
-{
-    window.clear(DARK);
-
-    //drawing background
-    drawChessOutline(window);
-    drawChessBoard(window);
-
-    //writting coordonates
-    drawCoordinates(window);
-
-    //drawing pieces
-    drawPieces(window);
-
-    //drawing the possibles mooves of a focused piece
-    drawPossiblesMooves(window);
-
-    window.display();
-} */
-
 /*
-void Board::drawPieces(sf::RenderWindow& window)
-{
-    for (int y = 0; y < BOARD_SIZE; ++y)
-    {
-        for (int x = A; x < BOARD_SIZE; ++x)
-        {
-            if (m_board[x][y])
-            {
-                window.draw(m_board[x][y]->get_sprite());
-            }
-        }
-    }
-}
-
 //drawing possibles mooves of a focused piece
 void Board::drawPossiblesMooves(sf::RenderWindow& window)
 {
@@ -132,26 +97,75 @@ void Board::drawPossiblesMooves(sf::RenderWindow& window)
     }
 } */
 
-void Board::FENreader(std::string fen)
+void Board::FENreader(const std::string& fen)
 {
-    
-}
-
-/*void Board::clic(int x, int y, bool WhiteToPlay)
-{
-    if (!m_focusedPiece)
+    for (auto& pair : m_board)
     {
-        const double maxSize = WINDOW_SIZE - MARGIN;
-        if (x >= MARGIN && x <= maxSize && y >= MARGIN && y <= maxSize)
+        delete pair.second;
+        m_board.erase(pair.first);
+    }
+
+    int row = m_config.board_size;
+    char files = 'A';
+
+    for (unsigned int i = 0; i < fen.size() && fen[i] != ' '; ++i)
+    {
+        char value = fen[i];
+        std::string key = files + std::to_string(row) ;
+        switch (value)
         {
-            int clicX = (x - MARGIN) / SQUARE_SIZE;
-            int clicY = (y - MARGIN) / SQUARE_SIZE;
-            m_focusedPiece = m_board[clicX][clicY];
+        case 'p':
+            m_board.insert({ key, new Pawn(BLACK, sf::Vector2u(files - 'A', row - 1)) });
+            break;
+        case 'r':
+            m_board.insert({ key, new Rook(BLACK, sf::Vector2u(files - 'A', row - 1)) });
+            break;
+        case 'n':
+            m_board.insert({ key, new Knight(BLACK, sf::Vector2u(files - 'A', row - 1)) });
+            break;
+        case 'b':
+            m_board.insert({ key, new Bishop(BLACK, sf::Vector2u(files - 'A', row - 1)) });
+            break;
+        case 'q':
+            m_board.insert({ key, new Queen(BLACK, sf::Vector2u(files - 'A', row - 1)) });
+            break;
+        case 'k':
+            m_board.insert({ key, new King(BLACK, sf::Vector2u(files - 'A', row - 1)) });
+            break;
+        case 'P':
+            m_board.insert({ key, new Pawn(WHITE, sf::Vector2u(files - 'A', row - 1)) });
+            break;
+        case 'R':
+            m_board.insert({ key, new Rook(WHITE, sf::Vector2u(files - 'A', row - 1)) });
+            break;
+        case 'N':
+            m_board.insert({ key, new Knight(WHITE, sf::Vector2u(files - 'A', row - 1)) });
+            break;
+        case 'B':
+            m_board.insert({ key, new Bishop(WHITE, sf::Vector2u(files - 'A', row - 1)) });
+            break;
+        case 'Q':
+            m_board.insert({ key, new Queen(WHITE, sf::Vector2u(files - 'A', row - 1)) });
+            break;
+        case 'K':
+            m_board.insert({ key, new King(WHITE, sf::Vector2u(files - 'A', row - 1)) });
+            break;
+        case '/':
+            row--;
+            files = 'A';
+            break;
+        case ' ':
+            break;
+        default:
+            files += value;
+            break;
         }
     }
-    else
-    {
-        //either the piece can moove there and so it moove , no matter that no more focused piece
-        m_focusedPiece = nullptr;
-    }
-}*/
+
+    //need to do last part of fen (after space)
+}
+
+std::string Board::FEN() const noexcept
+{
+    return "";
+}

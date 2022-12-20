@@ -14,17 +14,29 @@
 	// set_spritePosition(x, y);
 }*/
 
-/* chessPieces Piece::get_piece() const
+Piece::Piece(const chessColor color, const sf::Vector2u position) :
+	m_color{ color },
+	m_position{ position }
 {
-	return m_piece;
+
 }
 
-chessColor Piece::get_color() const
+Piece::~Piece()
+{
+
+}
+
+chessColor Piece::getPieceColor() const noexcept
 {
 	return m_color;
 }
 
-sf::Sprite& Piece::get_sprite()
+const sf::Vector2u Piece::getPosition() const noexcept
+{
+	return m_position;
+}
+
+/*sf::Sprite& Piece::get_sprite()
 {
     return m_sprite;
 }

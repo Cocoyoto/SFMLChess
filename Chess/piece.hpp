@@ -18,11 +18,14 @@ public:
 	Piece() = delete;
 	Piece(const chessColor color, const sf::Vector2u position);
 
-	virtual chessPieces getChessPiece() const = 0;
-	virtual unsigned int getPoints() const = 0;
+	~Piece();
 
-	chessColor getPieceColor() const;
-	const sf::Vector2u getPosition() const;
+	virtual chessPieces getChessPiece() const noexcept = 0;
+	virtual unsigned int getPoints() const noexcept = 0;
+	virtual char getFenPiece() const noexcept = 0;
+
+	chessColor getPieceColor() const noexcept;
+	const sf::Vector2u getPosition() const noexcept;
 
 
 	/* chessPieces get_piece() const;
@@ -43,8 +46,8 @@ private:
 	void set_spriteScale(int x, int y); */
 
 	const chessColor m_color;
-	chessPieces m_piece;
-	sf::Vector2u m_position;
+	sf::Vector2u m_position;//0,0 = A1
+	//chessPieces m_piece;
 	// sf::Sprite m_sprite;
 	// bool m_firstMoove;
 

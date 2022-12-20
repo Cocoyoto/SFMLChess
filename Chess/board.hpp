@@ -2,15 +2,13 @@
 
 #include <vector>
 #include <SFML/Graphics.hpp>
+#include <unordered_map>
 
 #include "game.typedef.hpp"
 
 class Piece;
 
-using std::vector;
-
-
-//enum files { A, B, C, D, E, F, G, H };
+using std::unordered_map;
 
 class Board
 {
@@ -19,10 +17,9 @@ public :
 
 	~Board();
 
-	void FENreader(std::string fen);
+	void FENreader(const std::string& fen);
+	std::string FEN() const noexcept;
 	unsigned int getSize() const;
-	
-	//void clic(const int x, const int y, const bool WhiteToPlay);
 
 private:
 	
@@ -30,7 +27,5 @@ private:
 	
 	BoardConfig m_config;
 
-	//vector<vector<Piece*>> m_board;//[A][8] == [0][0]
-	//vector<vector<bool>> m_colorBoard;//true for WHITE , false for BLACK
-	// Piece* m_focusedPiece;
+	unordered_map<std::string, Piece*> m_board;
 };

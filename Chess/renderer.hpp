@@ -36,10 +36,10 @@ public:
 
 private :
 	void drawCoordinates() const;
-	void drawPieces() const;
 	void drawPossiblesMooves() const;
 
 	void createBoardRend();
+	void createPiecesRend();
 	void appendOutline(float x, float y, float width, float height, sf::Color color, float thickness);
 	void appendSquare(float x, float y, float width, float height, sf::Color color);
 
@@ -49,6 +49,7 @@ private :
 	float m_fullboardSize;
 	float m_squareSize;
 	sf::VertexArray m_boardRend;
+	sf::VertexArray m_piecesRend;
 	sf::Font m_font;
 	BoardColors m_colors;
 	ResourceHolder<std::string, sf::Texture> m_resourcesHolder;
