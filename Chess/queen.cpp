@@ -13,7 +13,7 @@ Queen::~Queen()
 
 chessPieces Queen::getChessPiece() const noexcept
 {
-	return PAWN;
+	return QUEEN;
 }
 
 unsigned int Queen::getPoints() const noexcept

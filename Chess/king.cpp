@@ -13,7 +13,7 @@ King::~King()
 
 chessPieces King::getChessPiece() const noexcept
 {
-	return PAWN;
+	return KING;
 }
 
 unsigned int King::getPoints() const noexcept

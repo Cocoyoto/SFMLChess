@@ -1,6 +1,5 @@
 #include "game.typedef.hpp"
 #include "game.hpp"
-#include "textures.hpp"
 
 int main()
 {
@@ -17,8 +16,8 @@ int main()
     };
 
     Game chessGame(config);
-
     chessGame.newGame();
+    
     chessGame.play();
     
     return 0;

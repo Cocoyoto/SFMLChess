@@ -147,7 +147,6 @@
     <ClCompile Include="resourceHolder.cpp" />
     <ClCompile Include="ressourceHolder-impl.cpp" />
     <ClCompile Include="rook.cpp" />
-    <ClCompile Include="textures.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="bishop.hpp" />
@@ -163,7 +162,6 @@
     <ClInclude Include="renderer.hpp" />
     <ClInclude Include="resourceHolder.hpp" />
     <ClInclude Include="rook.hpp" />
-    <ClInclude Include="textures.hpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

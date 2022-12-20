@@ -17,16 +17,17 @@ Board::Board(const BoardConfig& config):
 
 Board::~Board()
 {
-    for (auto& pair : m_board)
-    {
-        delete pair.second;
-        m_board.erase(pair.first);
-    }
+
 }
 
-unsigned int Board::getSize() const
+unsigned int Board::getSize() const noexcept
 {
     return m_config.board_size;
+}
+
+const unordered_map<std::string, std::unique_ptr<Piece>>& Board::getPieces() const noexcept
+{
+    return m_board;
 }
 
 /* void Board::initPieces()
@@ -97,58 +98,52 @@ void Board::drawPossiblesMooves(sf::RenderWindow& window)
     }
 } */
 
-void Board::FENreader(const std::string& fen)
+void Board::FENreader(const std::string& fen) noexcept
 {
-    for (auto& pair : m_board)
-    {
-        delete pair.second;
-        m_board.erase(pair.first);
-    }
-
     int row = m_config.board_size;
     char files = 'A';
 
     for (unsigned int i = 0; i < fen.size() && fen[i] != ' '; ++i)
     {
         char value = fen[i];
-        std::string key = files + std::to_string(row) ;
+        std::string key = files + std::to_string(row);
         switch (value)
         {
         case 'p':
-            m_board.insert({ key, new Pawn(BLACK, sf::Vector2u(files - 'A', row - 1)) });
+            m_board.insert({ key, std::make_unique<Pawn> (BLACK, sf::Vector2u(files++ - 'A', row - 1)) });
             break;
         case 'r':
-            m_board.insert({ key, new Rook(BLACK, sf::Vector2u(files - 'A', row - 1)) });
+            m_board.insert({ key, std::make_unique<Rook>(BLACK, sf::Vector2u(files++ - 'A', row - 1)) });
             break;
         case 'n':
-            m_board.insert({ key, new Knight(BLACK, sf::Vector2u(files - 'A', row - 1)) });
+            m_board.insert({ key, std::make_unique<Knight>(BLACK, sf::Vector2u(files++ - 'A', row - 1)) });
             break;
         case 'b':
-            m_board.insert({ key, new Bishop(BLACK, sf::Vector2u(files - 'A', row - 1)) });
+            m_board.insert({ key, std::make_unique<Bishop>(BLACK, sf::Vector2u(files++ - 'A', row - 1)) });
             break;
         case 'q':
-            m_board.insert({ key, new Queen(BLACK, sf::Vector2u(files - 'A', row - 1)) });
+            m_board.insert({ key, std::make_unique<Queen>(BLACK, sf::Vector2u(files++ - 'A', row - 1)) });
             break;
         case 'k':
-            m_board.insert({ key, new King(BLACK, sf::Vector2u(files - 'A', row - 1)) });
+            m_board.insert({ key, std::make_unique<King>(BLACK, sf::Vector2u(files++ - 'A', row - 1)) });
             break;
         case 'P':
-            m_board.insert({ key, new Pawn(WHITE, sf::Vector2u(files - 'A', row - 1)) });
+            m_board.insert({ key, std::make_unique<Pawn>(WHITE, sf::Vector2u(files++ - 'A', row - 1)) });
             break;
         case 'R':
-            m_board.insert({ key, new Rook(WHITE, sf::Vector2u(files - 'A', row - 1)) });
+            m_board.insert({ key, std::make_unique<Rook>(WHITE, sf::Vector2u(files++ - 'A', row - 1)) });
             break;
         case 'N':
-            m_board.insert({ key, new Knight(WHITE, sf::Vector2u(files - 'A', row - 1)) });
+            m_board.insert({ key, std::make_unique<Knight>(WHITE, sf::Vector2u(files++ - 'A', row - 1)) });
             break;
         case 'B':
-            m_board.insert({ key, new Bishop(WHITE, sf::Vector2u(files - 'A', row - 1)) });
+            m_board.insert({ key, std::make_unique<Bishop>(WHITE, sf::Vector2u(files++ - 'A', row - 1)) });
             break;
         case 'Q':
-            m_board.insert({ key, new Queen(WHITE, sf::Vector2u(files - 'A', row - 1)) });
+            m_board.insert({ key, std::make_unique<Queen>(WHITE, sf::Vector2u(files++ - 'A', row - 1)) });
             break;
         case 'K':
-            m_board.insert({ key, new King(WHITE, sf::Vector2u(files - 'A', row - 1)) });
+            m_board.insert({ key, std::make_unique<King>(WHITE, sf::Vector2u(files++ - 'A', row - 1)) });
             break;
         case '/':
             row--;

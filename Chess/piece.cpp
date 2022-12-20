@@ -31,25 +31,17 @@ chessColor Piece::getPieceColor() const noexcept
 	return m_color;
 }
 
-const sf::Vector2u Piece::getPosition() const noexcept
+const sf::Vector2u& Piece::getPosition() const noexcept
 {
 	return m_position;
 }
 
-/*sf::Sprite& Piece::get_sprite()
+std::string Piece::getStringPosition() const noexcept
 {
-    return m_sprite;
+	return (char)('A' + m_position.x) + std::to_string(m_position.y + 1);
 }
 
-void Piece::set_piece(chessPieces chesspiece)
-{
-	if (m_piece == PAWN)
-	{
-		m_piece = chesspiece;
-		Textures::get_textures()->set_textPiece(this);
-	}
-}
-
+/*
 //check if the moove is possible ? (in array)
 void Piece::moove_piece(int x, int y, vector<vector<Piece*>> board)
 {
@@ -68,24 +60,4 @@ const vector <vector<int>>& Piece::get_possibleMooves() const
 void Piece::set_possibleMooves(vector<vector<Piece*>> board)
 {
 	
-}
-
-void Piece::set_spritePosition(sf::Vector2f position)
-{
-	m_sprite.setPosition(sf::Vector2f(MARGIN + SQUARE_SIZE * position.x + X_PIECE_GAP, (MARGIN + SQUARE_SIZE * position.y) - Y_PIECE_GAP));
-}
-
-void Piece::set_spritePosition(int x, int y)
-{
-	m_sprite.setPosition(sf::Vector2f(MARGIN + SQUARE_SIZE * x + X_PIECE_GAP, (MARGIN + SQUARE_SIZE * y) - Y_PIECE_GAP));
-}
-
-void Piece::set_spriteScale(sf::Vector2f scale)
-{
-	m_sprite.setScale(scale);
-}
-
-void Piece::set_spriteScale(int x, int y)
-{
-	set_spriteScale(sf::Vector2f(x, y));
-} */
+}*/

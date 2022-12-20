@@ -3,6 +3,7 @@
 #include <vector>
 #include <SFML/Graphics.hpp>
 #include <unordered_map>
+#include <memory>
 
 #include "game.typedef.hpp"
 
@@ -17,15 +18,13 @@ public :
 
 	~Board();
 
-	void FENreader(const std::string& fen);
-	std::string FEN() const noexcept;
-	unsigned int getSize() const;
+	unsigned int getSize() const noexcept;
+	const unordered_map<std::string, std::unique_ptr<Piece>>& getPieces() const noexcept;
 
-private:
-	
-	// void initPieces();
-	
+	void FENreader(const std::string& fen) noexcept;
+	std::string FEN() const noexcept;
+private:	
 	BoardConfig m_config;
 
-	unordered_map<std::string, Piece*> m_board;
+	unordered_map<std::string, std::unique_ptr<Piece>> m_board;
 };
