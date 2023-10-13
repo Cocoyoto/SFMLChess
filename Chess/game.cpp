@@ -39,4 +39,5 @@ void Game::play()
 void Game::newGame() noexcept
 {
 	m_board.FENreader("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1");
+	m_rend.piecesEdit();
 }

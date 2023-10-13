@@ -144,8 +144,6 @@
     <ClCompile Include="piece.cpp" />
     <ClCompile Include="queen.cpp" />
     <ClCompile Include="renderer.cpp" />
-    <ClCompile Include="resourceHolder.cpp" />
-    <ClCompile Include="ressourceHolder-impl.cpp" />
     <ClCompile Include="rook.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -162,6 +160,9 @@
     <ClInclude Include="renderer.hpp" />
     <ClInclude Include="resourceHolder.hpp" />
     <ClInclude Include="rook.hpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="resourceHolder.inl" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

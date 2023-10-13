@@ -1,5 +1,4 @@
 #include "piece.hpp"
-//#include "textures.hpp"
 
 /*Piece::Piece(const chessPieces piece, const chessColor color, const sf::Vector2u position) :
 	m_color { color },

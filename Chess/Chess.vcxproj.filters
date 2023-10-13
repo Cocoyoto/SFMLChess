@@ -33,12 +33,6 @@
     <ClCompile Include="controller.cpp">
       <Filter>Fichiers sources</Filter>
     </ClCompile>
-    <ClCompile Include="resourceHolder.cpp">
-      <Filter>Fichiers sources</Filter>
-    </ClCompile>
-    <ClCompile Include="ressourceHolder-impl.cpp">
-      <Filter>Fichiers sources</Filter>
-    </ClCompile>
     <ClCompile Include="pawn.cpp">
       <Filter>Fichiers sources</Filter>
     </ClCompile>
@@ -98,5 +92,10 @@
     <ClInclude Include="king.hpp">
       <Filter>Fichiers d%27en-tête</Filter>
     </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="resourceHolder.inl">
+      <Filter>Fichiers d%27en-tête</Filter>
+    </None>
   </ItemGroup>
 </Project>

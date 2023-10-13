@@ -34,18 +34,22 @@ public:
 	void closeWindow();
 	bool hasWindow() const;
 
+	void piecesEdit() noexcept; //each pieceEdit need to call it to update pieces vertex array
+
+	void clic(float x, float y) noexcept;
+
 private :
 	void drawCoordinates() const;
 	void drawPossiblesMooves() const;
 
-	void createBoardRend();
-	void createPiecesRend(sf::VertexArray& piecesRend) const;
-	void appendOutline(float x, float y, float width, float height, sf::Color color, float thickness, sf::VertexArray& VertexArray);
-	void appendSquare(float x, float y, float width, float height, sf::Color color, sf::VertexArray& VertexArray);
-	void appendSquare(float x, float y, float width, float height, sf::VertexArray& VertexArray);
-	void appendOutline(float x, float y, float width, float height, sf::Color color, float thickness, sf::VertexArray& VertexArray) const;
-	void appendSquare(float x, float y, float width, float height, sf::Color color, sf::VertexArray& VertexArray) const;
-	void appendSquare(float x, float y, float width, float height, sf::VertexArray& VertexArray) const;
+	void createBoardRend() noexcept;
+	void createPiecesRend() noexcept;
+	void appendOutline(float x, float y, float width, float height, sf::Color color, float thickness, sf::VertexArray& VertexArray) noexcept;
+	void appendSquare(float x, float y, float width, float height, sf::Color color, sf::VertexArray& VertexArray) noexcept;
+	void appendSquare(float x, float y, float width, float height, sf::VertexArray& VertexArray) noexcept;
+	void appendOutline(float x, float y, float width, float height, sf::Color color, float thickness, sf::VertexArray& VertexArray) const noexcept;
+	void appendSquare(float x, float y, float width, float height, sf::Color color, sf::VertexArray& VertexArray) const noexcept;
+	void appendSquare(float x, float y, float width, float height, sf::VertexArray& VertexArray) const noexcept;
 
 	std::unique_ptr<sf::RenderWindow> m_window;
 	Board* m_board;
@@ -53,6 +57,7 @@ private :
 	float m_fullboardSize;
 	float m_squareSize;
 	sf::VertexArray m_boardRend;
+	sf::VertexArray m_piecesRend;
 	sf::Font m_font;
 	BoardColors m_colors;
 	ResourceHolder<std::string, sf::Texture> m_resourcesHolder;

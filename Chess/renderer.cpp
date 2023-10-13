@@ -8,6 +8,7 @@ Renderer::Renderer(const RendererConfig& config):
 	m_fullboardSize((float)(config.window_size - m_margin * 2.0)),
 	m_squareSize(),
 	m_boardRend(sf::Quads),
+	m_piecesRend(sf::Quads),
 	m_colors {
 		{ 69, 	76, 	94, 	255 },
 		{ 230, 	234, 	215, 	255 },
@@ -31,6 +32,7 @@ void Renderer::changeConfig(const RendererConfig& config) noexcept
 	if (m_board)
 	{
 		createBoardRend();
+		createPiecesRend();
 	}
 }
 
@@ -41,6 +43,7 @@ void Renderer::changeBoard(Board* board) noexcept
 	{
 		m_squareSize = m_fullboardSize / m_board->getSize();
 		createBoardRend();
+		createPiecesRend();
 	}
 }
 
@@ -55,9 +58,7 @@ void Renderer::draw() const
 	drawCoordinates();
 
 	//drawing pieces
-	sf::VertexArray piecesRend(sf::Quads);
-	createPiecesRend(piecesRend);
-	m_window->draw(piecesRend, m_resourcesHolder.getResource("chessPieces"));
+	m_window->draw(m_piecesRend, m_resourcesHolder.getResource("chessPieces"));
 
 
 	m_window->display();
@@ -91,6 +92,15 @@ bool Renderer::hasWindow() const
 	return m_window != nullptr;
 }
 
+void Renderer::piecesEdit() noexcept
+{
+	createPiecesRend();
+}
+
+void Renderer::clic(float x, float y) noexcept
+{
+	auto& pieces = m_board->getPieces();
+}
 
 void Renderer::drawCoordinates() const
 {
@@ -126,7 +136,7 @@ void Renderer::drawPossiblesMooves() const
 
 }
 
-void Renderer::createBoardRend()
+void Renderer::createBoardRend() noexcept
 {
 	//adding the outline
 	appendOutline(m_margin, m_margin, m_fullboardSize, m_fullboardSize, m_colors.outline, 5, m_boardRend);
@@ -148,7 +158,7 @@ void Renderer::createBoardRend()
 	}
 }
 
-void Renderer::createPiecesRend(sf::VertexArray& piecesRend) const
+void Renderer::createPiecesRend() noexcept
 {
 	const unsigned int TEXT_Y = 32;
 	const unsigned int TEXT_X = 16;
@@ -160,26 +170,46 @@ void Renderer::createPiecesRend(sf::VertexArray& piecesRend) const
 	const unsigned int WIDTH = TEXT_X * SCALE_PIECE;
 	const unsigned int HEIGHT = TEXT_Y * SCALE_PIECE;
 
-	piecesRend.clear();
-	auto& piecesMap = m_board->getPieces();
+	m_piecesRend.clear();
+	auto& piecesTab = m_board->getPieces();
 	unsigned int j = 0;
-	for (const auto& i : piecesMap)
+	for (int files = 0; files < BOARD_SIZE; ++files)
+	{
+		for (int rows = 0; rows < BOARD_SIZE; ++rows)
+		{
+			if (piecesTab[files][rows] != nullptr)
+			{
+				appendSquare(X_PIECE_GAP + (files * m_squareSize), Y_PIECE_GAP + ((BOARD_SIZE - 1 - rows) * m_squareSize), WIDTH, HEIGHT, m_piecesRend);
+
+				//applying the texture
+				unsigned int x = TEXT_X * piecesTab[files][rows]->getChessPiece();
+				unsigned int y = TEXT_Y * piecesTab[files][rows]->getPieceColor();
+
+				m_piecesRend[j++].texCoords = sf::Vector2f(x, y);
+				m_piecesRend[j++].texCoords = sf::Vector2f(x + TEXT_X, y);
+				m_piecesRend[j++].texCoords = sf::Vector2f(x + TEXT_X, y + TEXT_Y);
+				m_piecesRend[j++].texCoords = sf::Vector2f(x, y + TEXT_Y);
+			}
+			
+		}
+	}
+	/*for (const auto& i : piecesMap)
 	{
 		sf::Vector2u position = i.second->getPosition();
-		appendSquare(X_PIECE_GAP + (position.x * m_squareSize), Y_PIECE_GAP + ((BOARD_SIZE - 1 - position.y) * m_squareSize), WIDTH, HEIGHT, piecesRend);
+		appendSquare(X_PIECE_GAP + (position.x * m_squareSize), Y_PIECE_GAP + ((BOARD_SIZE - 1 - position.y) * m_squareSize), WIDTH, HEIGHT, m_piecesRend);
 
 		//applying the texture
 		unsigned int x = TEXT_X * i.second->getChessPiece();
 		unsigned int y = TEXT_Y * i.second->getPieceColor();
 
-		piecesRend[j++].texCoords = sf::Vector2f(x, y);
-		piecesRend[j++].texCoords = sf::Vector2f(x + TEXT_X, y);
-		piecesRend[j++].texCoords = sf::Vector2f(x + TEXT_X, y + TEXT_Y);
-		piecesRend[j++].texCoords = sf::Vector2f(x, y + TEXT_Y);
-	}
+		m_piecesRend[j++].texCoords = sf::Vector2f(x, y);
+		m_piecesRend[j++].texCoords = sf::Vector2f(x + TEXT_X, y);
+		m_piecesRend[j++].texCoords = sf::Vector2f(x + TEXT_X, y + TEXT_Y);
+		m_piecesRend[j++].texCoords = sf::Vector2f(x, y + TEXT_Y);
+	}*/
 }
 
-void Renderer::appendOutline(float x, float y, float width, float height, sf::Color color, float thickness, sf::VertexArray& VertexArray)
+void Renderer::appendOutline(float x, float y, float width, float height, sf::Color color, float thickness, sf::VertexArray& VertexArray) noexcept
 {
 	appendSquare(x - thickness, y - thickness, width + thickness, thickness, color, VertexArray);
 	appendSquare(x - thickness, y, thickness, height + thickness, color, VertexArray);
@@ -187,7 +217,7 @@ void Renderer::appendOutline(float x, float y, float width, float height, sf::Co
 	appendSquare(x, y + height, width + thickness, thickness, color, VertexArray);
 }
 
-void Renderer::appendSquare(float x, float y, float width, float height, sf::Color color, sf::VertexArray& VertexArray)
+void Renderer::appendSquare(float x, float y, float width, float height, sf::Color color, sf::VertexArray& VertexArray) noexcept
 {
 	VertexArray.append(sf::Vertex(sf::Vector2f(x, y), color));
 	VertexArray.append(sf::Vertex(sf::Vector2f(x+width, y), color));
@@ -195,7 +225,7 @@ void Renderer::appendSquare(float x, float y, float width, float height, sf::Col
 	VertexArray.append(sf::Vertex(sf::Vector2f(x, y+height), color));
 }
 
-void Renderer::appendSquare(float x, float y, float width, float height, sf::VertexArray& VertexArray)
+void Renderer::appendSquare(float x, float y, float width, float height, sf::VertexArray& VertexArray) noexcept
 {
 	VertexArray.append(sf::Vertex(sf::Vector2f(x, y)));
 	VertexArray.append(sf::Vertex(sf::Vector2f(x + width, y)));
@@ -203,7 +233,7 @@ void Renderer::appendSquare(float x, float y, float width, float height, sf::Ver
 	VertexArray.append(sf::Vertex(sf::Vector2f(x, y + height)));
 }
 
-void Renderer::appendOutline(float x, float y, float width, float height, sf::Color color, float thickness, sf::VertexArray& VertexArray) const
+void Renderer::appendOutline(float x, float y, float width, float height, sf::Color color, float thickness, sf::VertexArray& VertexArray) const noexcept
 {
 	appendSquare(x - thickness, y - thickness, width + thickness, thickness, color, VertexArray);
 	appendSquare(x - thickness, y, thickness, height + thickness, color, VertexArray);
@@ -211,7 +241,7 @@ void Renderer::appendOutline(float x, float y, float width, float height, sf::Co
 	appendSquare(x, y + height, width + thickness, thickness, color, VertexArray);
 }
 
-void Renderer::appendSquare(float x, float y, float width, float height, sf::Color color, sf::VertexArray& VertexArray) const
+void Renderer::appendSquare(float x, float y, float width, float height, sf::Color color, sf::VertexArray& VertexArray) const noexcept
 {
 	VertexArray.append(sf::Vertex(sf::Vector2f(x, y), color));
 	VertexArray.append(sf::Vertex(sf::Vector2f(x + width, y), color));
@@ -219,7 +249,7 @@ void Renderer::appendSquare(float x, float y, float width, float height, sf::Col
 	VertexArray.append(sf::Vertex(sf::Vector2f(x, y + height), color));
 }
 
-void Renderer::appendSquare(float x, float y, float width, float height, sf::VertexArray& VertexArray) const
+void Renderer::appendSquare(float x, float y, float width, float height, sf::VertexArray& VertexArray) const noexcept
 {
 	VertexArray.append(sf::Vertex(sf::Vector2f(x, y)));
 	VertexArray.append(sf::Vertex(sf::Vector2f(x + width, y)));

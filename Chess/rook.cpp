@@ -32,3 +32,8 @@ char Rook::getFenPiece() const noexcept
 		return 'r';
 	}
 }
+
+//std::vector<sf::Vector2u> Rook::getPossibleMoves(const std::vector<std::vector<Piece*>>& board) const noexcept
+//{
+//	std::vector<sf::Vector2u> possibleMoves;
+//}

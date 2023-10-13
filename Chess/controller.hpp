@@ -13,7 +13,9 @@ public:
 	bool update();
 
 private:
+	
 	Renderer* m_rend;
 	Board* m_board;
+	bool m_pieceFocused;
 };
 

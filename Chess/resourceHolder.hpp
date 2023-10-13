@@ -15,3 +15,5 @@ public :
 private:
 	std::unordered_map <Id, Resource> m_resourcesMap;
 };
+
+#include "resourceHolder.inl"

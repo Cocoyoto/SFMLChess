@@ -5,11 +5,6 @@
 enum chessPieces { PAWN, KNIGHT, ROOK, BISHOP, QUEEN, KING };
 enum chessColor { BLACK, WHITE };
 
-// const int Y_PIECE_GAP = 0;
-
-// const int SCALE_PIECE = SQUARE_SIZE / 32;
-// const int X_PIECE_GAP = (SQUARE_SIZE - (16 * SCALE_PIECE * 1.0)) / 2;
-
 class Piece
 {
 public:
@@ -21,6 +16,7 @@ public:
 	virtual chessPieces getChessPiece() const noexcept = 0;
 	virtual unsigned int getPoints() const noexcept = 0;
 	virtual char getFenPiece() const noexcept = 0;
+	//virtual std::vector<sf::Vector2u> getPossibleMoves(const std::vector<std::vector<Piece*>>& board) const noexcept = 0;
 
 	chessColor getPieceColor() const noexcept;
 	const sf::Vector2u& getPosition() const noexcept;
@@ -38,5 +34,5 @@ private:
 	sf::Vector2u m_position;//0,0 = A1
 	// bool m_firstMoove;
 
-	// vector <vector<int>> m_possibleMooves;
+	//virtual std::vector<sf::Vector2u> m_possibleMooves;
 };
