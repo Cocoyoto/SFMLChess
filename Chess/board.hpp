@@ -1,11 +1,13 @@
 #pragma once
 
 #include <vector>
+#include <forward_list>
 #include <SFML/Graphics.hpp>
 
 #include "game.typedef.hpp"
 
 class Piece;
+class King;
 
 using std::vector;
 
@@ -53,6 +55,7 @@ public :
 private:	
 	BoardConfig m_config;
 
-	//adding variables for both kings ?
 	std::vector<std::vector<Piece*>> m_board;//[0][0] = A1
+	std::vector<std::forward_list<Piece*>> m_pieces;
+	std::vector<King*> m_kings;
 };
