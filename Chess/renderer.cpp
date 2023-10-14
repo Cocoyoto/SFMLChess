@@ -14,7 +14,8 @@ Renderer::Renderer(const RendererConfig& config):
 		{ 230, 	234, 	215, 	255 },
 		{ 230, 	234, 	215, 	255 },
 		{ 55, 	55, 	55, 	100 },
-		{ 69,	76,		94,		255 }
+		{ 69,	76,		94,		255 },
+		{ 131,	145,	179,	255 }
 	},
 	m_resourcesHolder{}
 {
@@ -64,6 +65,27 @@ void Renderer::draw() const
 	m_window->display();
 }
 
+void Renderer::draw(const sf::Vector2u& positionFocused, const std::vector<sf::Vector2u>& possiblesMooves) const
+{
+	//TODO draw everything+ possibles mooves + focused piece
+	m_window->clear(m_colors.background);
+
+	//drawing board
+	m_window->draw(m_boardRend);
+
+	//writting coordonates
+	drawCoordinates();
+
+	//drawing possibles mooves
+	drawPossiblesMooves(possiblesMooves, positionFocused);
+
+	//drawing pieces
+	m_window->draw(m_piecesRend, m_resourcesHolder.getResource("chessPieces"));
+
+
+	m_window->display();
+}
+
 bool Renderer::pollEvent(sf::Event& event)
 {
 	return m_window->pollEvent(event);
@@ -97,9 +119,35 @@ void Renderer::piecesEdit() noexcept
 	createPiecesRend();
 }
 
-void Renderer::clic(float x, float y) noexcept
+std::string Renderer::getSquareName(int mouseX, int mouseY) const noexcept
 {
-	auto& pieces = m_board->getPieces();
+	if (mouseX < m_margin || mouseY < m_margin || mouseX > m_fullboardSize + m_margin || mouseY > m_fullboardSize + m_margin)
+	{
+		return "";
+	}
+	else
+	{
+		int x = (mouseX - m_margin) / m_squareSize;
+		int y = (mouseY - m_margin) / m_squareSize;
+		std::string caseName = "";
+		caseName += (char)(x + 'A');
+		caseName += std::to_string((int)(m_fullboardSize / m_squareSize - y));
+		return caseName;
+	}
+}
+
+sf::Vector2u Renderer::getSquarePosition(int mouseX, int mouseY) const noexcept
+{
+	if (mouseX < m_margin || mouseY < m_margin || mouseX > m_fullboardSize + m_margin || mouseY > m_fullboardSize + m_margin)
+	{
+		return sf::Vector2u(-1, -1);
+	}
+	else
+	{
+		int x = (mouseX - m_margin) / m_squareSize;
+		int y = (mouseY - m_margin) / m_squareSize;
+		return sf::Vector2u(x, (int)(m_fullboardSize / m_squareSize - y) - 1);
+	}
 }
 
 void Renderer::drawCoordinates() const
@@ -131,9 +179,26 @@ void Renderer::drawCoordinates() const
 	}
 }
 
-void Renderer::drawPossiblesMooves() const
+void Renderer::drawPossiblesMooves(const std::vector<sf::Vector2u>& possiblesMooves, const sf::Vector2u& position) const
 {
+	int radius = m_squareSize / 4;
+	unsigned int board_size = m_board->getSize();
+	const double value = MARGIN + (m_squareSize / 2.0);
+	for (int i = 0; i < possiblesMooves.size(); ++i)
+	{
+		sf::CircleShape circle;
+		circle.setRadius(radius);
+		circle.setPointCount(50);
+		circle.setOrigin(radius, radius);
+		circle.setPosition((possiblesMooves[i].x * m_squareSize) + value, (board_size - possiblesMooves[i].y) * m_squareSize);
+		circle.setFillColor(m_colors.move_preview);
+		m_window->draw(circle);
+	}
 
+	sf::VertexArray selectedSquare(sf::Quads);
+	appendSquare(m_margin + position.x * m_squareSize, m_margin + (board_size - position.y - 1) * m_squareSize, m_squareSize, m_squareSize, m_colors.selectedBackground, selectedSquare);
+
+	m_window->draw(selectedSquare);
 }
 
 void Renderer::createBoardRend() noexcept
@@ -193,20 +258,6 @@ void Renderer::createPiecesRend() noexcept
 			
 		}
 	}
-	/*for (const auto& i : piecesMap)
-	{
-		sf::Vector2u position = i.second->getPosition();
-		appendSquare(X_PIECE_GAP + (position.x * m_squareSize), Y_PIECE_GAP + ((BOARD_SIZE - 1 - position.y) * m_squareSize), WIDTH, HEIGHT, m_piecesRend);
-
-		//applying the texture
-		unsigned int x = TEXT_X * i.second->getChessPiece();
-		unsigned int y = TEXT_Y * i.second->getPieceColor();
-
-		m_piecesRend[j++].texCoords = sf::Vector2f(x, y);
-		m_piecesRend[j++].texCoords = sf::Vector2f(x + TEXT_X, y);
-		m_piecesRend[j++].texCoords = sf::Vector2f(x + TEXT_X, y + TEXT_Y);
-		m_piecesRend[j++].texCoords = sf::Vector2f(x, y + TEXT_Y);
-	}*/
 }
 
 void Renderer::appendOutline(float x, float y, float width, float height, sf::Color color, float thickness, sf::VertexArray& VertexArray) noexcept
@@ -256,3 +307,15 @@ void Renderer::appendSquare(float x, float y, float width, float height, sf::Ver
 	VertexArray.append(sf::Vertex(sf::Vector2f(x + width, y + height)));
 	VertexArray.append(sf::Vertex(sf::Vector2f(x, y + height)));
 }
+
+/*
+//drawing possibles mooves of a focused piece
+void Renderer::drawPossiblesMooves()
+{
+	if (m_focusedPiece)
+	{
+		vector <vector<int>> possiblesMooves = m_focusedPiece->get_possibleMooves();
+
+		
+	}
+} */

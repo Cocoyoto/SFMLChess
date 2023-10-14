@@ -1,6 +1,7 @@
 #pragma once
 #include <SFML/Graphics.hpp>
 #include <memory>
+#include <string>
 
 #include "game.typedef.hpp"
 #include "board.hpp"
@@ -16,6 +17,7 @@ struct BoardColors {
 	sf::Color outline;
 	sf::Color move_preview;
 	sf::Color background;
+	sf::Color selectedBackground;
 };
 
 class Renderer
@@ -27,6 +29,7 @@ public:
 	void changeBoard(Board* board) noexcept;
 
 	void draw() const;
+	void draw(const sf::Vector2u& positionFocused, const std::vector<sf::Vector2u>& possiblesMooves) const;
 
 	bool pollEvent(sf::Event& event);
 
@@ -36,11 +39,12 @@ public:
 
 	void piecesEdit() noexcept; //each pieceEdit need to call it to update pieces vertex array
 
-	void clic(float x, float y) noexcept;
+	std::string getSquareName(int mouseX, int mouseY) const noexcept;
+	sf::Vector2u getSquarePosition(int mouseX, int mouseY) const noexcept;
 
 private :
 	void drawCoordinates() const;
-	void drawPossiblesMooves() const;
+	void drawPossiblesMooves(const std::vector<sf::Vector2u>& possiblesMooves, const sf::Vector2u& position) const;
 
 	void createBoardRend() noexcept;
 	void createPiecesRend() noexcept;

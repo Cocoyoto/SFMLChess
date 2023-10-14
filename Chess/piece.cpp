@@ -15,7 +15,9 @@
 
 Piece::Piece(const chessColor color, const sf::Vector2u position) :
 	m_color{ color },
-	m_position{ position }
+	m_position{ position },
+	m_isPossibleMooveActualized{ false },
+	m_possibleMoves{ }
 {
 
 }
@@ -40,23 +42,24 @@ std::string Piece::getStringPosition() const noexcept
 	return (char)('A' + m_position.x) + std::to_string(m_position.y + 1);
 }
 
-/*
-//check if the moove is possible ? (in array)
-void Piece::moove_piece(int x, int y, vector<vector<Piece*>> board)
+std::vector<sf::Vector2u>& Piece::getPossibleMoves(const std::vector<std::vector<Piece*>>& board) noexcept
 {
-	m_firstMoove = false;
-	m_files = x;
-	m_rows = y;
-	set_spritePosition(x, y);
-	set_possibleMooves(board);
+	if (!m_isPossibleMooveActualized)
+	{
+		m_isPossibleMooveActualized = true;
+		updatePossibleMoves(board);
+	}
+
+	return m_possibleMoves;
 }
 
-const vector <vector<int>>& Piece::get_possibleMooves() const
+void Piece::clearMooves() noexcept
 {
-	return m_possibleMooves;
+	m_isPossibleMooveActualized = false;
+	m_possibleMoves.clear();
 }
 
-void Piece::set_possibleMooves(vector<vector<Piece*>> board)
+void Piece::setPosition(const sf::Vector2u& position) noexcept
 {
-	
-}*/
+	m_position = position;
+}

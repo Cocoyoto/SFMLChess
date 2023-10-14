@@ -14,6 +14,8 @@ public:
     chessPieces getChessPiece() const noexcept override;
     unsigned int getPoints() const noexcept override;
     char getFenPiece() const noexcept override;
-    //std::vector<sf::Vector2u> getPossibleMoves(const std::vector<std::vector<Piece*>>& board) const noexcept override;
+
+private :
+    void updatePossibleMoves(const std::vector<std::vector<Piece*>>& board) noexcept override;
 };
 

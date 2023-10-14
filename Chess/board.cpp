@@ -38,28 +38,54 @@ const std::vector<std::vector<Piece*>>& Board::getPieces() const noexcept
     return m_board;
 }
 
-/*
-//drawing possibles mooves of a focused piece
-void Board::drawPossiblesMooves(sf::RenderWindow& window)
+Piece* Board::getPiece(const sf::Vector2u& position) const noexcept
 {
-    if (m_focusedPiece)
-    {
-        vector <vector<int>> possiblesMooves = m_focusedPiece->get_possibleMooves();
+	return m_board[position.x][position.y];
+}
 
-        int radius = SQUARE_SIZE / 4;
-        const double value = MARGIN + (SQUARE_SIZE / 2.0);
-        for (int i = 0; i < possiblesMooves[0].size(); ++i)
+Piece* Board::getPiece(const std::string& name) const noexcept
+{
+    sf::Vector2u position;
+    nameToPosition(name, position);
+    return getPiece(position);
+}
+
+Piece* Board::getPiece(const int& x, const int& y) const noexcept
+{
+    return m_board[x][y];
+}
+
+int Board::movePiece(Piece* piece, const sf::Vector2u& position) noexcept
+{
+    int points = 0;
+    sf::Vector2u piecePos = piece->getPosition();
+    m_board[piecePos.x][piecePos.y] = nullptr;
+
+    Piece* capture = m_board[position.x][position.y];
+
+    if (capture)
+    {
+        points = capture->getPoints();
+        delete capture;
+    }
+
+    m_board[position.x][position.y] = piece;
+    piece->setPosition(position);
+
+    for (int i = 0; i < m_board.size(); ++i)
+    {
+        for (int j = 0; j < m_board.size(); ++j)
         {
-            sf::CircleShape circle;
-            circle.setRadius(radius);
-            circle.setPointCount(50);
-            circle.setOrigin(radius, radius);
-            circle.setPosition((possiblesMooves[0][i] * SQUARE_SIZE) + value, (BOARD_SIZE - possiblesMooves[1][i]) * SQUARE_SIZE);
-            circle.setFillColor(MOOVE_PREVIEW);
-            window.draw(circle);
+            Piece* p = m_board[i][j];
+            if (p)
+            {
+                p->clearMooves();
+            }
         }
     }
-} */
+
+    return points;
+}
 
 void Board::FENreader(const std::string& fen) noexcept
 {
@@ -130,7 +156,7 @@ void Board::FENreader(const std::string& fen) noexcept
             break;
         }
 
-        //need to do last part of fen (after space)
+        //TODO last part of fen (after space)
     }
 }
 

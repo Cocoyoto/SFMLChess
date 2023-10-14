@@ -28,11 +28,6 @@ void Game::play()
 	while (isRunning())
 	{
 		waitInput = m_contr.update();
-
-		if (m_rend.hasWindow() && waitInput)
-		{
-			m_rend.draw();
-		}
 	}
 }
 
