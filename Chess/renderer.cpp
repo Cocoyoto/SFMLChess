@@ -190,7 +190,7 @@ void Renderer::drawPossiblesMooves(const std::vector<sf::Vector2u>& possiblesMoo
 		circle.setRadius(radius);
 		circle.setPointCount(50);
 		circle.setOrigin(radius, radius);
-		circle.setPosition((possiblesMooves[i].x * m_squareSize) + value, (board_size - possiblesMooves[i].y) * m_squareSize);
+		circle.setPosition((possiblesMooves[i].x * m_squareSize) + value, (board_size - possiblesMooves[i].y - 1) * m_squareSize + value);
 		circle.setFillColor(m_colors.move_preview);
 		m_window->draw(circle);
 	}
