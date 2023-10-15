@@ -64,17 +64,14 @@ unsigned int King::isCheckMate(const std::vector<std::vector<Piece*>>& board, st
 		{
 			return 0;
 		}
-		else
-		{
-			if (m_isInCheck == 1)
-			{
-				return 1;
-			}
-			else if (m_isInCheck == 0)
-			{
-				return 2;
-			}
-		}
+	}
+	if (m_isInCheck == 1)
+	{
+		return 1;
+	}
+	else if (m_isInCheck == 0)
+	{
+		return 2;
 	}
 }
 
