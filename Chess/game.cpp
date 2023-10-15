@@ -34,6 +34,6 @@ void Game::play()
 void Game::newGame() noexcept
 {
 	//m_contr.setColorToPlay(m_board.FENreader("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1"));
-	m_contr.setColorToPlay(m_board.FENreader("3N4/4B1P1/5Kpp/1BPp3b/1p1k3q/2b1r2n/1p1ppQ2/8"));
+	m_contr.setColorToPlay(m_board.FENreader("6k1/5ppp/p7/P7/5b2/7P/1r3PP1/3R2K1 w - - 0 1"));
 	m_rend.piecesEdit();
 }

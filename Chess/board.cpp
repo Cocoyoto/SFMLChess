@@ -93,10 +93,15 @@ int Board::movePiece(Piece* piece, const sf::Vector2u& position) noexcept
 			}
 		}
     }
-    //TODO !! need to prevent king from beeing captured
+
     m_kings[nextColor(piece->getPieceColor())]->updateCheck(m_pieces, m_board);
 
     return points;
+}
+
+unsigned int Board::isCheckMate(const chessColor& colorToPlay) noexcept
+{
+    return m_kings[colorToPlay]->isCheckMate(m_board, m_pieces);
 }
 
 chessColor Board::FENreader(const std::string& fen) noexcept

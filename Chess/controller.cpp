@@ -94,6 +94,17 @@ void Controller::handleClick(const sf::Event& event)
 					m_rend->piecesEdit();
 					m_rend->draw();
 					m_colorToPlay = nextColor(m_colorToPlay);
+					unsigned int end = m_board->isCheckMate(m_colorToPlay);
+					if (end == 1)
+					{
+						std::cout << "Checkmate" << std::endl;
+						m_colorToPlay = COUNT;
+					}
+					else if (end == 2)
+					{
+						std::cout << "Stalemate" << std::endl;
+						m_colorToPlay = COUNT;
+					}
 					break;
 				}
 			}

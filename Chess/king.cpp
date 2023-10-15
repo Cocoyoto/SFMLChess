@@ -39,6 +39,45 @@ bool King::doesCheck(const std::vector<std::vector<Piece*>>& board, King* king) 
 	return kingCheck(m_position, king);
 }
 
+unsigned int King::isCheckMate(const std::vector<std::vector<Piece*>>& board, std::vector<std::forward_list<Piece*>>& pieces) noexcept
+{//0 = not checkmate, 1 = checkmate, 2 = stalemate
+	if (m_isInCheck == 2)
+	{
+		if (!m_isPossibleMooveActualized)
+		{
+			getPossibleMoves(board, pieces);
+		}
+
+		if (m_possibleMoves.empty())
+		{
+			return 1;
+		}
+		else
+		{
+			return 0;
+		}
+	}
+	auto list = pieces[getPieceColor()];
+	for (Piece* piece : list)
+	{
+		if (!piece->getPossibleMoves(board, pieces).empty())
+		{
+			return 0;
+		}
+		else
+		{
+			if (m_isInCheck == 1)
+			{
+				return 1;
+			}
+			else if (m_isInCheck == 0)
+			{
+				return 2;
+			}
+		}
+	}
+}
+
 bool King::kingCheck(const sf::Vector2u& piecePosition, const King* king) noexcept
 {
 	int x = piecePosition.x;

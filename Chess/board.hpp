@@ -49,6 +49,7 @@ public :
 	Piece* getPiece(const std::string& name) const noexcept;
 	Piece* getPiece(const int& x, const int& y) const noexcept;
 	int movePiece(Piece* piece, const sf::Vector2u& position) noexcept;
+	unsigned int isCheckMate(const chessColor& colorToPlay) noexcept;
 
 	chessColor FENreader(const std::string& fen) noexcept;
 	std::string FEN() const noexcept;

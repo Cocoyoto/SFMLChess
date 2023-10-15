@@ -19,7 +19,7 @@ public:
     char getFenPiece() const noexcept override;
     virtual bool doesCheck(const std::vector<std::vector<Piece*>>& board, King* king) const noexcept override;
 
-    //unsigned int isCheckMate(const std::vector<std::vector<Piece*>>& board, const std::vector<std::forward_list<Piece*>>& pieces) const noexcept;//0 = not checkmate, 1 = checkmate, 2 = stalemate
+    unsigned int isCheckMate(const std::vector<std::vector<Piece*>>& board, std::vector<std::forward_list<Piece*>>& pieces) noexcept;//0 = not checkmate, 1 = checkmate, 2 = stalemate
     static bool kingCheck(const sf::Vector2u& piecePosition, const King* king) noexcept;
     unsigned int isInCheck() const noexcept;//0 = not in check, 1 = single check, 2 = double check, only king can moove
     unsigned int updateCheck(const std::vector<std::forward_list<Piece*>>& pieces, const std::vector<std::vector<Piece*>>& board) noexcept;
