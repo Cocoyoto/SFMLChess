@@ -3,16 +3,10 @@
 #include <iostream>
 
 Controller::Controller(Renderer* rend, Board* board) :
-	Controller(rend, board, chessColor::WHITE)
-{
-
-}
-
-Controller::Controller(Renderer* rend, Board* board, chessColor ColorToPlay) :
 	m_rend(rend),
 	m_board(board),
 	m_pieceFocused(nullptr),
-	m_colorToPlay(ColorToPlay)
+	m_colorToPlay(chessColor::WHITE)
 {
 
 }
@@ -44,6 +38,11 @@ bool Controller::update()
 	return eventHappen;
 }
 
+void Controller::setColorToPlay(chessColor color) noexcept
+{
+	m_colorToPlay = color;
+}
+
 void Controller::handleClick(const sf::Event& event)
 {
 	if (event.mouseButton.button == sf::Mouse::Left)
@@ -62,7 +61,7 @@ void Controller::handleClick(const sf::Event& event)
 			if (piece && piece->getPieceColor() == m_colorToPlay)
 			{
 				m_pieceFocused = piece;
-				m_rend->draw(m_pieceFocused->getPosition(), m_pieceFocused->getPossibleMoves(m_board->getPieces()));
+				m_rend->draw(m_pieceFocused->getPosition(), m_pieceFocused->getPossibleMoves(m_board->getBoard(), m_board->getPieces()));
 				return;
 			}
 			else
@@ -80,12 +79,12 @@ void Controller::handleClick(const sf::Event& event)
 				if (pieceClicked->getPieceColor() == m_pieceFocused->getPieceColor())
 				{
 					m_pieceFocused = pieceClicked;
-					m_rend->draw(m_pieceFocused->getPosition(), m_pieceFocused->getPossibleMoves(m_board->getPieces()));
+					m_rend->draw(m_pieceFocused->getPosition(), m_pieceFocused->getPossibleMoves(m_board->getBoard(), m_board->getPieces()));
 					return;
 				}
 			}
 
-			std::vector<sf::Vector2u> possibleMoves = m_pieceFocused->getPossibleMoves(m_board->getPieces());
+			std::vector<sf::Vector2u> possibleMoves = m_pieceFocused->getPossibleMoves(m_board->getBoard(), m_board->getPieces());
 
 			for (int i = 0; i < possibleMoves.size(); ++i)
 			{

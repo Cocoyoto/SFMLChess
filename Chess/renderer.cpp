@@ -15,7 +15,8 @@ Renderer::Renderer(const RendererConfig& config):
 		{ 230, 	234, 	215, 	255 },
 		{ 55, 	55, 	55, 	100 },
 		{ 69,	76,		94,		255 },
-		{ 131,	145,	179,	255 }
+		{ 131,	145,	179,	255 },
+		{ 158,	57,		57,		255 }
 	},
 	m_resourcesHolder{}
 {
@@ -236,52 +237,28 @@ void Renderer::createPiecesRend() noexcept
 	const unsigned int HEIGHT = TEXT_Y * SCALE_PIECE;
 
 	m_piecesRend.clear();
-	auto& piecesTab = m_board->getPieces();
+	auto& pieces = m_board->getPieces();
 	unsigned int j = 0;
-	for (int files = 0; files < BOARD_SIZE; ++files)
+
+	for (int i = 0; i < pieces.size(); ++i)
 	{
-		for (int rows = 0; rows < BOARD_SIZE; ++rows)
+		for (Piece* p : pieces[i])
 		{
-			if (piecesTab[files][rows] != nullptr)
-			{
-				appendSquare(X_PIECE_GAP + (files * m_squareSize), Y_PIECE_GAP + ((BOARD_SIZE - 1 - rows) * m_squareSize), WIDTH, HEIGHT, m_piecesRend);
+			int files = p->getPosition().x;
+			int rows = p->getPosition().y;
 
-				//applying the texture
-				unsigned int x = TEXT_X * piecesTab[files][rows]->getChessPiece();
-				unsigned int y = TEXT_Y * piecesTab[files][rows]->getPieceColor();
+			appendSquare(X_PIECE_GAP + (files * m_squareSize), Y_PIECE_GAP + ((BOARD_SIZE - 1 - rows) * m_squareSize), WIDTH, HEIGHT, m_piecesRend);
 
-				m_piecesRend[j++].texCoords = sf::Vector2f(x, y);
-				m_piecesRend[j++].texCoords = sf::Vector2f(x + TEXT_X, y);
-				m_piecesRend[j++].texCoords = sf::Vector2f(x + TEXT_X, y + TEXT_Y);
-				m_piecesRend[j++].texCoords = sf::Vector2f(x, y + TEXT_Y);
-			}
-			
+			//applying the texture
+			unsigned int x = TEXT_X * p->getChessPiece();
+			unsigned int y = TEXT_Y * p->getPieceColor();
+
+			m_piecesRend[j++].texCoords = sf::Vector2f(x, y);
+			m_piecesRend[j++].texCoords = sf::Vector2f(x + TEXT_X, y);
+			m_piecesRend[j++].texCoords = sf::Vector2f(x + TEXT_X, y + TEXT_Y);
+			m_piecesRend[j++].texCoords = sf::Vector2f(x, y + TEXT_Y);
 		}
 	}
-}
-
-void Renderer::appendOutline(float x, float y, float width, float height, sf::Color color, float thickness, sf::VertexArray& VertexArray) noexcept
-{
-	appendSquare(x - thickness, y - thickness, width + thickness, thickness, color, VertexArray);
-	appendSquare(x - thickness, y, thickness, height + thickness, color, VertexArray);
-	appendSquare(x + width, y - thickness, thickness, height + thickness, color, VertexArray);
-	appendSquare(x, y + height, width + thickness, thickness, color, VertexArray);
-}
-
-void Renderer::appendSquare(float x, float y, float width, float height, sf::Color color, sf::VertexArray& VertexArray) noexcept
-{
-	VertexArray.append(sf::Vertex(sf::Vector2f(x, y), color));
-	VertexArray.append(sf::Vertex(sf::Vector2f(x+width, y), color));
-	VertexArray.append(sf::Vertex(sf::Vector2f(x+width, y+height), color));
-	VertexArray.append(sf::Vertex(sf::Vector2f(x, y+height), color));
-}
-
-void Renderer::appendSquare(float x, float y, float width, float height, sf::VertexArray& VertexArray) noexcept
-{
-	VertexArray.append(sf::Vertex(sf::Vector2f(x, y)));
-	VertexArray.append(sf::Vertex(sf::Vector2f(x + width, y)));
-	VertexArray.append(sf::Vertex(sf::Vector2f(x + width, y + height)));
-	VertexArray.append(sf::Vertex(sf::Vector2f(x, y + height)));
 }
 
 void Renderer::appendOutline(float x, float y, float width, float height, sf::Color color, float thickness, sf::VertexArray& VertexArray) const noexcept
@@ -307,15 +284,3 @@ void Renderer::appendSquare(float x, float y, float width, float height, sf::Ver
 	VertexArray.append(sf::Vertex(sf::Vector2f(x + width, y + height)));
 	VertexArray.append(sf::Vertex(sf::Vector2f(x, y + height)));
 }
-
-/*
-//drawing possibles mooves of a focused piece
-void Renderer::drawPossiblesMooves()
-{
-	if (m_focusedPiece)
-	{
-		vector <vector<int>> possiblesMooves = m_focusedPiece->get_possibleMooves();
-
-		
-	}
-} */

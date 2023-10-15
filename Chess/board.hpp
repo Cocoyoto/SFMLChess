@@ -8,8 +8,7 @@
 
 class Piece;
 class King;
-
-using std::vector;
+enum chessColor;
 
 inline void positionToName(const sf::Vector2u& position, std::string& name) noexcept
 {
@@ -44,13 +43,14 @@ public :
 	~Board();
 
 	unsigned int getSize() const noexcept;
-	const std::vector<std::vector<Piece*>>& getPieces() const noexcept;
+	const std::vector<std::vector<Piece*>>& getBoard() const noexcept;
+	const std::vector<std::forward_list<Piece*>>& getPieces() const noexcept;
 	Piece* getPiece(const sf::Vector2u& position) const noexcept;
 	Piece* getPiece(const std::string& name) const noexcept;
 	Piece* getPiece(const int& x, const int& y) const noexcept;
 	int movePiece(Piece* piece, const sf::Vector2u& position) noexcept;
 
-	void FENreader(const std::string& fen) noexcept;
+	chessColor FENreader(const std::string& fen) noexcept;
 	std::string FEN() const noexcept;
 private:	
 	BoardConfig m_config;

@@ -18,6 +18,7 @@ struct BoardColors {
 	sf::Color move_preview;
 	sf::Color background;
 	sf::Color selectedBackground;
+	sf::Color check;
 };
 
 class Renderer
@@ -48,9 +49,6 @@ private :
 
 	void createBoardRend() noexcept;
 	void createPiecesRend() noexcept;
-	void appendOutline(float x, float y, float width, float height, sf::Color color, float thickness, sf::VertexArray& VertexArray) noexcept;
-	void appendSquare(float x, float y, float width, float height, sf::Color color, sf::VertexArray& VertexArray) noexcept;
-	void appendSquare(float x, float y, float width, float height, sf::VertexArray& VertexArray) noexcept;
 	void appendOutline(float x, float y, float width, float height, sf::Color color, float thickness, sf::VertexArray& VertexArray) const noexcept;
 	void appendSquare(float x, float y, float width, float height, sf::Color color, sf::VertexArray& VertexArray) const noexcept;
 	void appendSquare(float x, float y, float width, float height, sf::VertexArray& VertexArray) const noexcept;

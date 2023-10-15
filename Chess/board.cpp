@@ -32,9 +32,14 @@ unsigned int Board::getSize() const noexcept
     return m_config.board_size;
 }
 
-const std::vector<std::vector<Piece*>>& Board::getPieces() const noexcept
+const std::vector<std::vector<Piece*>>& Board::getBoard() const noexcept
 {
     return m_board;
+}
+
+const std::vector<std::forward_list<Piece*>>& Board::getPieces() const noexcept
+{
+    return m_pieces;
 }
 
 Piece* Board::getPiece(const sf::Vector2u& position) const noexcept
@@ -83,16 +88,18 @@ int Board::movePiece(Piece* piece, const sf::Vector2u& position) noexcept
 			}
             else
             {
-				(*it)->clearMooves();
+				(*it)->clearMoves();
 				++it;
 			}
 		}
     }
+    //TODO !! need to prevent king from beeing captured
+    m_kings[nextColor(piece->getPieceColor())]->updateCheck(m_pieces, m_board);
 
     return points;
 }
 
-void Board::FENreader(const std::string& fen) noexcept
+chessColor Board::FENreader(const std::string& fen) noexcept
 {
     int row = m_config.board_size - 1;
     int files = 0;
@@ -176,7 +183,21 @@ void Board::FENreader(const std::string& fen) noexcept
         }
 
         //TODO last part of fen (after space)
+        //TODO return color to play
     }
+
+    for (int i = 0; i < m_pieces.size(); ++i)
+    {
+        for (Piece* p : m_pieces[i])
+        {
+            p->setKing(m_kings[i]);
+        }
+    }
+
+    chessColor colorToPlay = chessColor::WHITE;
+    m_kings[colorToPlay]->updateCheck(m_pieces, m_board);
+
+    return colorToPlay;
 }
 
 std::string Board::FEN() const noexcept

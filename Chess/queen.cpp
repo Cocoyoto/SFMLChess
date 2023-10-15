@@ -1,4 +1,7 @@
 #include "queen.hpp"
+#include "rook.hpp"
+#include "bishop.hpp"
+#include "king.hpp"
 
 Queen::Queen(const chessColor color, const sf::Vector2u position) :
 	Piece(color, position)
@@ -33,176 +36,18 @@ char Queen::getFenPiece() const noexcept
 	}
 }
 
-void Queen::updatePossibleMoves(const std::vector<std::vector<Piece*>>& board) noexcept
+bool Queen::doesCheck(const std::vector<std::vector<Piece*>>& board, King* king) const noexcept
 {
-	int x = m_position.x;
-	int y = m_position.y;
+	return Rook::rookCheck(board, m_position, king) || Bishop::bishopCheck(board, m_position, king);
+}
 
-	//down
-	while (y > 0)
+void Queen::updatePossibleMoves(const std::vector<std::vector<Piece*>>& board, const std::vector<std::forward_list<Piece*>>& pieces) noexcept
+{
+	if (m_king->isInCheck() == 2)
 	{
-		y--;
-		if (board[x][y] == nullptr)
-		{
-			m_possibleMoves.push_back(sf::Vector2u(x, y));
-		}
-		else if (board[x][y]->getPieceColor() != getPieceColor())
-		{
-			m_possibleMoves.push_back(sf::Vector2u(x, y));
-			break;
-		}
-		else
-		{
-			break;
-		}
+		return;
 	}
-
-	//up
-	y = m_position.y;
-	while (y < board.size()-1)
-	{
-		y++;
-		if (board[x][y] == nullptr)
-		{
-			m_possibleMoves.push_back(sf::Vector2u(x, y));
-		}
-		else if (board[x][y]->getPieceColor() != getPieceColor())
-		{
-			m_possibleMoves.push_back(sf::Vector2u(x, y));
-			break;
-		}
-		else
-		{
-			break;
-		}
-	}
-
-	//left
-	x = m_position.x;
-	y = m_position.y;
-	while (x > 0)
-	{
-		x--;
-		if (board[x][y] == nullptr)
-		{
-			m_possibleMoves.push_back(sf::Vector2u(x, y));
-		}
-		else if (board[x][y]->getPieceColor() != getPieceColor())
-		{
-			m_possibleMoves.push_back(sf::Vector2u(x, y));
-			break;
-		}
-		else
-		{
-			break;
-		}
-	}
-
-	//right
-	x = m_position.x;
-	while (x < board.size() - 1)
-	{
-		x++;
-		if (board[x][y] == nullptr)
-		{
-			m_possibleMoves.push_back(sf::Vector2u(x, y));
-		}
-		else if (board[x][y]->getPieceColor() != getPieceColor())
-		{
-			m_possibleMoves.push_back(sf::Vector2u(x, y));
-			break;
-		}
-		else
-		{
-			break;
-		}
-	}
-
-	//down right
-	x = m_position.x;
-	y = m_position.y;
-	while (x > 0 && y > 0)
-	{
-		x--;
-		y--;
-		if (board[x][y] == nullptr)
-		{
-			m_possibleMoves.push_back(sf::Vector2u(x, y));
-		}
-		else if (board[x][y]->getPieceColor() != getPieceColor())
-		{
-			m_possibleMoves.push_back(sf::Vector2u(x, y));
-			break;
-		}
-		else
-		{
-			break;
-		}
-	}
-
-	//down right
-	x = m_position.x;
-	y = m_position.y;
-	while (x < board.size() - 1 && y > 0)
-	{
-		x++;
-		y--;
-		if (board[x][y] == nullptr)
-		{
-			m_possibleMoves.push_back(sf::Vector2u(x, y));
-		}
-		else if (board[x][y]->getPieceColor() != getPieceColor())
-		{
-			m_possibleMoves.push_back(sf::Vector2u(x, y));
-			break;
-		}
-		else
-		{
-			break;
-		}
-	}
-
-	//up left
-	x = m_position.x;
-	y = m_position.y;
-	while (x > 0 && y < board.size() - 1)
-	{
-		x--;
-		y++;
-		if (board[x][y] == nullptr)
-		{
-			m_possibleMoves.push_back(sf::Vector2u(x, y));
-		}
-		else if (board[x][y]->getPieceColor() != getPieceColor())
-		{
-			m_possibleMoves.push_back(sf::Vector2u(x, y));
-			break;
-		}
-		else
-		{
-			break;
-		}
-	}
-
-	//up right
-	x = m_position.x;
-	y = m_position.y;
-	while (x < board.size()-1 && y < board.size() - 1)
-	{
-		x++;
-		y++;
-		if (board[x][y] == nullptr)
-		{
-			m_possibleMoves.push_back(sf::Vector2u(x, y));
-		}
-		else if (board[x][y]->getPieceColor() != getPieceColor())
-		{
-			m_possibleMoves.push_back(sf::Vector2u(x, y));
-			break;
-		}
-		else
-		{
-			break;
-		}
-	}
+	//white queen got problems with captures but only sometimes, with moves but only sometimes too
+	Rook::rookPossibleMoves(board, pieces, this,  m_possibleMoves);
+	Bishop::bishopPossibleMoves(board, pieces, this, m_possibleMoves);
 }
