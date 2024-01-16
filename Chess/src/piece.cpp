@@ -53,9 +53,18 @@ void Piece::clearMoves() noexcept
 	m_possibleMoves.clear();
 }
 
-void Piece::setPosition(const sf::Vector2u& position) noexcept
+bool Piece::setPosition(const sf::Vector2u& position) noexcept
 {
-	m_position = position;
+	for (int i = 0; i < m_possibleMoves.size(); ++i)
+	{
+		if (m_possibleMoves[i] == position)
+		{
+			m_position = position;
+			clearMoves();
+			return true;
+		}
+	}
+	return false;
 }
 
 void Piece::setKing(King* king) noexcept

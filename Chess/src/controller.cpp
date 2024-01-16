@@ -84,32 +84,25 @@ void Controller::handleClick(const sf::Event& event)
 				}
 			}
 
-			std::vector<sf::Vector2u> possibleMoves = m_pieceFocused->getPossibleMoves(m_board->getBoard(), m_board->getPieces());
-
-			for (int i = 0; i < possibleMoves.size(); ++i)
+			
+			if (m_board->movePiece(m_pieceFocused, square))
 			{
-				if (possibleMoves[i] == square)
+				m_rend->piecesEdit();
+				m_colorToPlay = nextColor(m_colorToPlay);
+				unsigned int end = m_board->isCheckMate(m_colorToPlay);
+				if (end == 1)
 				{
-					m_board->movePiece(m_pieceFocused, square);
-					m_rend->piecesEdit();
-					m_rend->draw();
-					m_colorToPlay = nextColor(m_colorToPlay);
-					unsigned int end = m_board->isCheckMate(m_colorToPlay);
-					if (end == 1)
-					{
-						std::cout << "Checkmate" << std::endl;
-						m_colorToPlay = COUNT;
-					}
-					else if (end == 2)
-					{
-						std::cout << "Stalemate" << std::endl;
-						m_colorToPlay = COUNT;
-					}
-					break;
+					std::cout << "Checkmate" << std::endl;
+					m_colorToPlay = COUNT;
+				}
+				else if (end == 2)
+				{
+					std::cout << "Stalemate" << std::endl;
+					m_colorToPlay = COUNT;
 				}
 			}
 			m_pieceFocused = nullptr;
-			m_rend->draw();
+			m_rend->draw();			
 		}
 	}
 	else if (event.mouseButton.button == sf::Mouse::Right)

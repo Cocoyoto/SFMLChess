@@ -366,4 +366,4 @@ FodyWeavers.xs
 *.vxproj
 *.filters
 Chess/lib/
-Chess/include/
+Chess/include/SFML

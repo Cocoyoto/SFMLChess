@@ -34,7 +34,7 @@ public:
 	King* getKing() const noexcept;
 	void clearMoves() noexcept;
 
-	void setPosition(const sf::Vector2u& position) noexcept;
+	bool setPosition(const sf::Vector2u& position) noexcept;
 	void setKing(King* king) noexcept;
 
 	bool addMove(std::vector<std::vector<Piece*>>& board, const std::vector<std::forward_list<Piece*>>& pieces, std::vector<sf::Vector2u>& possibleMoves, sf::Vector2u move);

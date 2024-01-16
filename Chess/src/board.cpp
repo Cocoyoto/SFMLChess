@@ -59,10 +59,16 @@ Piece* Board::getPiece(const int& x, const int& y) const noexcept
     return m_board[x][y];
 }
 
-int Board::movePiece(Piece* piece, const sf::Vector2u& position) noexcept
+bool Board::movePiece(Piece* piece, const sf::Vector2u& position) noexcept
 {
     int points = 0;
     sf::Vector2u piecePos = piece->getPosition();
+
+    if (!piece->setPosition(position))
+    {
+		return false;
+	}
+
     m_board[piecePos.x][piecePos.y] = nullptr;
 
     Piece* capture = m_board[position.x][position.y];
@@ -74,7 +80,6 @@ int Board::movePiece(Piece* piece, const sf::Vector2u& position) noexcept
     }
 
     m_board[position.x][position.y] = piece;
-    piece->setPosition(position);
 
     for (int i = 0; i < m_pieces.size(); ++i)
     {
@@ -96,7 +101,8 @@ int Board::movePiece(Piece* piece, const sf::Vector2u& position) noexcept
 
     m_kings[nextColor(piece->getPieceColor())]->updateCheck(m_pieces, m_board);
 
-    return points;
+    return true;
+    //return points;
 }
 
 unsigned int Board::isCheckMate(const chessColor& colorToPlay) noexcept

@@ -21,5 +21,7 @@ public :
 
 private:
     void updatePossibleMoves(const std::vector<std::vector<Piece*>>& board, const std::vector<std::forward_list<Piece*>>& pieces) noexcept override;
+
+    bool m_hasMoved2Squares;
 };
 

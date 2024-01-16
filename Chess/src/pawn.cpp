@@ -2,7 +2,8 @@
 #include "king.hpp"
 
 Pawn::Pawn(const chessColor color, const sf::Vector2u position) :
-	Piece(color, position)
+	Piece(color, position),
+	m_hasMoved2Squares{ false }
 {
 
 }
