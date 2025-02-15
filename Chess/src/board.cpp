@@ -76,7 +76,6 @@ bool Board::movePiece(Piece* piece, const sf::Vector2u& position) noexcept
     if (capture)
     {
         points = capture->getPoints();
-        delete capture;
     }
 
     m_board[position.x][position.y] = piece;
@@ -88,8 +87,10 @@ bool Board::movePiece(Piece* piece, const sf::Vector2u& position) noexcept
         {
             if (*it == capture)
             {
-                auto itCapture = it++;
+                auto itCapture = it;
+                it++;
 				m_pieces[i].remove(*itCapture);
+                delete capture;
 			}
             else
             {

@@ -87,13 +87,13 @@ bool Piece::addMove(std::vector<std::vector<Piece*>>& board, const std::vector<s
 	sf::Vector2u PiecePosition = getPosition();
 	m_position.x = i;
 	m_position.y = j;
-	if (ret =Piece::isMoveLegal(pieces, getKing(), board, captured))
+	if (ret = Piece::isMoveLegal(pieces, getKing(), board, captured))
 	{
 		possibleMoves.push_back(sf::Vector2u(i, j));
 	}
 
 	board[x][y] = board[i][j];
-	board[i][j] = nullptr;
+	board[i][j] = captured;
 	m_position = PiecePosition;
 
 	return ret;

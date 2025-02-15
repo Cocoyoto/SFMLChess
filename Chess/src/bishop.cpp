@@ -45,78 +45,84 @@ bool Bishop::bishopCheck(const std::vector<std::vector<Piece*>>& board, const sf
 	int y = piecePosition.y;
 	int xKing = king->getPosition().x;
 	int yKing = king->getPosition().y;
+	int xDiff = xKing - x;
+	int yDiff = yKing - y;
 
-	// Up Right
-	if (xKing - x == yKing - y)
+	//then bishop can go on the king position
+	if (abs(xDiff) == abs(yDiff))
 	{
-		x++;
-		y++;
-
-		while (x < xKing && y < yKing)
+		// Up Right
+		if (xDiff > 0 && yDiff > 0)
 		{
-			if (board[x][y] != nullptr)
-			{
-				return false;
-			}
-
 			x++;
 			y++;
-		}
-		return true;
-	}
-	// Up Left
-	else if (xKing - x == y - yKing)
-	{
-		x--;
-		y++;
 
-		while (x > xKing && y < yKing)
-		{
-			if (board[x][y] != nullptr)
+			while (x < xKing && y < yKing)
 			{
-				return false;
-			}
+				if (board[x][y] != nullptr)
+				{
+					return false;
+				}
 
+				x++;
+				y++;
+			}
+			return true;
+		}
+		// Up Left
+		else if (xDiff < 0 && yDiff > 0)
+		{
 			x--;
 			y++;
-		}
-		return true;
-	}
-	// Down Right
-	else if (x - xKing == yKing - y)
-	{
-		x++;
-		y--;
 
-		while (x < xKing && y > yKing)
-		{
-			if (board[x][y] != nullptr)
+			while (x > xKing && y < yKing)
 			{
-				return false;
-			}
+				if (board[x][y] != nullptr)
+				{
+					return false;
+				}
 
+				x--;
+				y++;
+			}
+			return true;
+		}
+		// Down Right
+		else if (xDiff > 0 && yDiff < 0)
+		{
 			x++;
 			y--;
-		}
-		return true;
-	}
-	// Down Left
-	else if (x - xKing == y - yKing)
-	{
-		x--;
-		y--;
 
-		while (x > xKing && y > yKing)
-		{
-			if (board[x][y] != nullptr)
+			while (x < xKing && y > yKing)
 			{
-				return false;
-			}
+				if (board[x][y] != nullptr)
+				{
+					return false;
+				}
 
+				x++;
+				y--;
+			}
+			return true;
+		}
+		// Down Left
+		else if (xDiff < 0 && yDiff < 0)
+		{
 			x--;
 			y--;
+
+			while (x > xKing && y > yKing)
+			{
+				if (board[x][y] != nullptr)
+				{
+					return false;
+				}
+
+				x--;
+				y--;
+			}
+			return true;
 		}
-		return true;
 	}
 
 	return false;
@@ -125,7 +131,6 @@ bool Bishop::bishopCheck(const std::vector<std::vector<Piece*>>& board, const sf
 void Bishop::bishopPossibleMoves(const std::vector<std::vector<Piece*>>& board, const std::vector<std::forward_list<Piece*>>& pieces, Piece* piece, std::vector<sf::Vector2u>& possibleMoves) noexcept
 {
 	sf::Vector2u m_position = piece->getPosition();
-	King* m_king = piece->getKing();
 	int x = m_position.x;
 	int y = m_position.y;
 

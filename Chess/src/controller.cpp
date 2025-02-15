@@ -48,18 +48,22 @@ void Controller::handleClick(const sf::Event& event)
 	if (event.mouseButton.button == sf::Mouse::Left)
 	{
 		sf::Vector2u square = m_rend->getSquarePosition(event.mouseButton.x, event.mouseButton.y);
-		//TODO hilight square clicked if a piece is on it and possible mooves
+		//if the click is outside the board, reload the display and remove the selected piece
 		if (square.x == -1 || square.y == -1)
-		{	
+		{
+			m_pieceFocused = nullptr;
 			m_rend->draw();
 			return;
 		}
 
+		//if no piece is selected
 		if (m_pieceFocused == nullptr)
 		{
 			Piece* piece = m_board->getPiece(square);
+
 			if (piece && piece->getPieceColor() == m_colorToPlay)
 			{
+				//we select the piece clicked and draw the potential moves of the piece
 				m_pieceFocused = piece;
 				m_rend->draw(m_pieceFocused->getPosition(), m_pieceFocused->getPossibleMoves(m_board->getBoard(), m_board->getPieces()));
 				return;
